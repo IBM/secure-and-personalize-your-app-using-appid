@@ -45,7 +45,6 @@ const discovery = new DiscoveryV1({
 app.get("/generic-news", async function (req, res) {
 	console.log("\ngeneric_query = " + samples.generic_query);
 	var queryResponse = await invokeDiscovery(samples.generic_query);
-	transformResponse(queryResponse);
 	res.json(transformResponse(queryResponse));
 });
 
