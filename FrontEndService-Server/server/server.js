@@ -45,12 +45,12 @@ app.use(session({
 }));
 
 const config = {
-	tenantId: "0f83edea-2f75-4526-8667-c8674ac9f924",
-	clientId: "6dedc33d-7354-4a99-9869-dc5bde3c3dc2",
-	secret: "ZDlhYzQ5ZWQtMjhhNS00Y2IwLWFiZjQtZWEyNTlkYTVmZmY2",
-	oauthServerUrl: "https://us-south.appid.cloud.ibm.com/oauth/v4/0f83edea-2f75-4526-8667-c8674ac9f924",
-  redirectUri: "http://localhost:3000/preferences",
-  profilesURL: "https://us-south.appid.cloud.ibm.com"
+	tenantId: "",
+	clientId: "",
+	secret: "",
+	oauthServerUrl: "",
+  	redirectUri: "",
+  	profilesURL: ""
 }
 app.use(passport.initialize());
 app.use(passport.session());
