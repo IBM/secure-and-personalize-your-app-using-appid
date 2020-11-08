@@ -1,0 +1,36 @@
+.banner {
+    height: 50px;
+}
+
+.top-right-button{
+    height: 100%;
+    width: 100px;
+    color:white;
+    font-size: 10pt;
+}
+
+.page-heading {
+    font-size: 20px;
+}
+
+.custom-container {
+    margin-top: 5%;
+    margin-left: 3%;
+    margin-right: 3%;
+}
+
+.tile {
+    margin-top: 15px;
+    margin-left: 15px;
+    margin-right: 15px;
+}
+
+p {
+    font-size: 13px;
+}
+
+.form-element-container {
+    margin-top: 3%;
+    margin-left: 5%;
+    margin-right: 5%;
+}
