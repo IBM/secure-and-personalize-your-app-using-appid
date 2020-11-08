@@ -1,74 +1,85 @@
 samples = require("./samples");
 
-function getInterests(attributes) {
-    var interestsQueryString = "";
-    var interests = "";
-    if( attributes.interested_in ){
-        interests = attributes.interested_in;
-        interests.forEach(function (item) {
-            if (interestsQueryString.length == 0) {
-                interestsQueryString = "("
-            } else {
-                interestsQueryString = interestsQueryString + "|"
-            }
-            interestsQueryString = interestsQueryString + "enriched_text.concepts.text:'" + item + "'";
-        });
+function getCategories(attributes) {
+    var categoriesQueryString = "";
+    var categories = "";
+    if (attributes && attributes.categories) {
+        categories = attributes.categories;
+        if (categories) {
+            cat_array = categories.split(",");
+            cat_array.forEach(function (item) {
+                if (categoriesQueryString.length == 0) {
+                    categoriesQueryString = "("
+                } else {
+                    categoriesQueryString = categoriesQueryString + "|"
+                }
+                categoriesQueryString = categoriesQueryString + "enriched_text.concepts.text:'" + item + "'";
+            });
+
+        }
     }
-    if (interestsQueryString.length > 0) {
-        interestsQueryString = interestsQueryString + ")";
+    if (categoriesQueryString.length > 0) {
+        categoriesQueryString = categoriesQueryString + ")";
     }
-    return interestsQueryString;
+    return categoriesQueryString;
 }
 
-function getHosts(attributes) {
-    var hostsQueryString = ""
-    var hosts = "";
-    if (attributes.hosts) {
-        hosts = attributes.hosts
-        hosts.forEach(function (item) {
-            if (hostsQueryString.length == 0) {
-                hostsQueryString = "("
-            } else {
-                hostsQueryString = hostsQueryString + "|"
-            }
-            hostsQueryString = hostsQueryString + "host:'" + item + "'";
-        });
+
+function getSources(attributes) {
+    var sourcesQueryString = ""
+    var sources = "";
+    if (attributes.sources) {
+        sources = attributes.sources
+        if (sources) {
+            sources_array = sources.split(",");
+            sources_array.forEach(function (item) {
+                if (sourcesQueryString.length == 0) {
+                    sourcesQueryString = "("
+                } else {
+                    sourcesQueryString = sourcesQueryString + "|"
+                }
+                sourcesQueryString = sourcesQueryString + "host:'" + item + "'";
+            });
+        }
     }
-    if (hostsQueryString.length > 0) {
-        hostsQueryString = hostsQueryString + ")";
+    if (sourcesQueryString.length > 0) {
+        sourcesQueryString = sourcesQueryString + ")";
     }
-    return hostsQueryString;
+    return sourcesQueryString;
 }
+
 
 function getQuery(attributes) {
-    var interests = getInterests(attributes);
-    var hosts = getHosts(attributes);
+    var categories = getCategories(attributes);
+    var sources = getSources(attributes);
     var query = samples.financial_news_query;
     var pub_date = samples.pub_date;
 
     var filterValue = "";
-    if( attributes.language ){
+    if (attributes.language) {
         filterValue = "language:" + attributes.language;
-    }else{
+    } else {
         filterValue = "language:en";
     }
-    if( filterValue.length > 0 ){
+    /*
+    if (filterValue.length > 0) {
         filterValue = filterValue + "," + pub_date;
-    }else{
+    } else {
         filterValue = pub_date;
     }
-    if( interests.length > 0 ){
-        if( filterValue.length > 0 ){
-            filterValue = filterValue + "," + interests;
-        }else{
-            filterValue = interests;
+    */
+    if (categories.length > 0) {
+        if (filterValue.length > 0) {
+            filterValue = filterValue + "," + categories;
+        } else {
+            filterValue = categories;
         }
     }
-    if( hosts.length > 0 ){
-        if( filterValue.length > 0 ){
-            filterValue = filterValue + "," + hosts;
-        }else{
-            filterValue = hosts;
+    if (sources.length > 0) {
+        if (filterValue.length > 0) {
+            filterValue = filterValue + "," + sources;
+        } else {
+            filterValue = sources;
         }
     }
 
