@@ -134,8 +134,12 @@ app.get("/user-preferences", passport.authenticate(APIStrategy.STRATEGY_NAME, { 
 	if (accessToken) {
 		userProfileManager.getAllAttributes(accessToken).then(async function (attributes) {
 			console.log("\nAttributes to set = " + JSON.stringify(attributes));
+			if( attributes && (attributes.categories || attributes.sources) ){
+				res.sendStatus(200);
+			}else{
+				res.sendStatus(201);
+			}
 
-			res.json(attributes);
 		}).catch(function (error) {
 			console.log("\nError getting custom attributes = " + error);
 		});

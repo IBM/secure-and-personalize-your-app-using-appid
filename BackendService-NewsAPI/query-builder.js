@@ -53,7 +53,7 @@ function getQuery(attributes) {
     var categories = getCategories(attributes);
     var sources = getSources(attributes);
     var query = samples.financial_news_query;
-    var pub_date = samples.pub_date;
+    query = query + "," + samples.pub_date;
 
     var filterValue = "";
     if (attributes.language) {

@@ -1,0 +1,38 @@
+{
+	"folders": [
+		{
+			"path": ".."
+		},
+		{
+			"name": "my-nodejs-project",
+			"path": "../../../../../../../../../my-nodejs-project"
+		},
+		{
+			"name": "demoproj",
+			"path": "../../../../../../../../../demoproj"
+		}
+	],
+	"settings": {},
+	"launch": {
+		"configurations": [
+			{
+				"type": "node",
+				"name": "Debug my-nodejs-project",
+				"request": "attach",
+				"address": "127.0.0.1",
+				"localRoot": "/Users/murali/my-nodejs-project",
+				"remoteRoot": "/app",
+				"restart": true
+			},
+			{
+				"type": "node",
+				"name": "Debug demoproj",
+				"request": "attach",
+				"address": "127.0.0.1",
+				"localRoot": "/Users/murali/demoproj",
+				"remoteRoot": "/app",
+				"restart": true
+			}
+		]
+	}
+}
