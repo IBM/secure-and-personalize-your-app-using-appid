@@ -1,5 +1,5 @@
 applications:
-- name: appid-backend-newsapi
+- name: appid-backend-user-mgmt
   memory: 256M
   instances: 1
   random-route: true
