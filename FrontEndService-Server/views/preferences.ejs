@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>User Preferences</title>
+    <link rel='stylesheet' href='https://unpkg.com/carbon-components/css/carbon-components.min.css' />
+    <link rel='stylesheet' type="text/css" href="/stylesheets/custom-style.css" />
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</head>
+
+<body>
+      <div id="header">
+        <header class="banner bx--header" role="banner" aria-label="IBM Platform Name" data-header>
+            
+          <a class="bx--header__name" href="javascript:void(0)" 
+                    style="font-size: 15pt;"
+                    title="">
+                    Set your Preferences
+          </a>
+          <div class="bx--header__global">
+            <button id="welcome" class="bx--header__menu-trigger bx--header__action top-right-button" 
+                aria-label="Action 4" 
+                title="Welcome" data-navigation-menu-panel-label-expand="Action 4"
+                data-navigation-menu-panel-label-collapse="Close menu" data-product-switcher-target="#switcher-bqavcareoq">
+                Welcome <%= username %>
+            </button> 
+          </div>
+        </header>
+      </div>
+      <br/>
+    
+    <div class="preference-container" id="preferences">
+      <form method="POST">
+        <div class=" form-element-container bx--form-item">
+          <fieldset class="bx--fieldset">
+              <legend class="bx--label label-heading">News Sources</legend>
+              <!-- input + label -->
+              <% for(var i=0; i < sources.length; i++) { %>
+                <div class="bx--form-item bx--checkbox-wrapper">
+                  <input id="bx--source-<%= i+1 %>" class="bx--checkbox" type="checkbox" value="<%= sourcesURL[i] %>"
+                    name="sources">
+                  <label for="bx--source-<%= i+1 %>" class="bx--checkbox-label"><%= sources[i] %></label>
+                </div>
+                <% } %>
+          </fieldset>
+        </div>
+
+        <div class="form-element-container bx--form-item">
+          <fieldset class="bx--fieldset">
+            <legend class="bx--label label-heading">Interested In</legend>
+            <!-- input + label -->
+            <% for(var i=0; i < categories.length; i++) { %>
+              <div class="bx--form-item bx--checkbox-wrapper">
+                <input id="bx--category-<%= i+1 %>" class="bx--checkbox" type="checkbox" value="<%= categories[i] %>"
+                  name="categories">
+                <label for="bx--category-<%= i+1 %>" class="bx--checkbox-label"><%= categories[i] %></label>
+              </div>
+              <% } %>
+          </fieldset>
+        </div>
+      
+        <div class=" form-element-container bx--form-item">
+            <button id="submit" class="bx--btn bx--btn--primary" formaction="/set-preferences" onclick="validate()">Set Preferences</button>
+        </div>
+      </form>
+    </div>
+</body>
+
+<script src="https://unpkg.com/carbon-components/scripts/carbon-components.min.js"></script>
+<script>
+  function validate() {
+    var isChecked =  $('input:checkbox').is(':checked')
+    if (!isChecked) {
+      alert("Please select any value to set/update your preferences.");  
+    }
+  }
+</script>
+</html>

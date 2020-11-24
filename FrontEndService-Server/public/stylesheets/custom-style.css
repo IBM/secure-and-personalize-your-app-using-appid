@@ -29,8 +29,13 @@ p {
     font-size: 13px;
 }
 
-.form-element-container {
-    margin-top: 3%;
-    margin-left: 5%;
-    margin-right: 5%;
+.label-heading {
+    font-size: 20px;
+    color: black;
+}
+
+.preference-container {
+    margin-top: 5%;
+    margin-left: 8%;
+    margin-right: 3%;
 }
