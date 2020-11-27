@@ -89,7 +89,7 @@ function getPreferencesAsString(pref) {
 	return prefString;
 }
 
-app.get("/user-preferences", passport.authenticate(APIStrategy.STRATEGY_NAME, { session: false }), function (req, res) {
+app.get("/is-user-preferences-set", passport.authenticate(APIStrategy.STRATEGY_NAME, { session: false }), function (req, res) {
 	console.log("In Get User Preferences")
 	var accessToken = req.headers['authorization'].split(' ')[1];
 
@@ -100,6 +100,40 @@ app.get("/user-preferences", passport.authenticate(APIStrategy.STRATEGY_NAME, { 
 			}else{
 				res.sendStatus(201);
 			}
+
+		}).catch(function (error) {
+			console.log("\nError getting custom attributes = " + error);
+		});
+	} else {
+		res.sendStatus(403);
+	}
+});
+
+app.get("/user-preferences", passport.authenticate(APIStrategy.STRATEGY_NAME, { session: false }), function (req, res) {
+	console.log("In Get User Preferences")
+	var accessToken = req.headers['authorization'].split(' ')[1];
+
+	if (accessToken) {
+		userProfileManager.getAllAttributes(accessToken).then(async function (attributes) {
+			if( !attributes ){
+				attributes = {};
+				attributes.categories=[];
+				attributes.sources=[];
+			}else {
+				if( attributes.categories ){
+					var categoriesArr = attributes.categories.split(",");
+					attributes.categories = categoriesArr;
+				}else{
+					attributes.categories=[];
+				}
+				if( attributes.sources ){
+					var sourcesArr = attributes.sources.split(",");
+					attributes.sources = sourcesArr;
+				}else{
+					attributes.sources=[];
+				}
+			}
+			res.json(attributes);
 
 		}).catch(function (error) {
 			console.log("\nError getting custom attributes = " + error);
