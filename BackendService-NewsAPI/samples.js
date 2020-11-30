@@ -23,7 +23,7 @@ var sample_attributes2 = {
 
 
 financial_news_query = "(enriched_text.categories.label:'finance'|enriched_text.categories.label:'financial news')";
-pub_date = "publication_date>now-3days";
+pub_date = "publication_date>now-7days";
 
 
 
