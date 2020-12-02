@@ -1,5 +1,5 @@
 *** Work in progress ***
-# Add Security and User Personalization to an application using AppID
+# Add Security and User Personalization for an online Finance news portal using AppID
 
 There are two important aspects for any applications that you build - `Authentication and User Personalization`. 
 
