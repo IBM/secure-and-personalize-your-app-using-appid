@@ -1,5 +1,5 @@
 *** Work in progress ***
-# Security and User Personalization for your application using AppID
+# Add Security and User Personalization to an application using AppID
 
 There are two important aspects for any applications that you build - `Authentication and User Personalization`. 
 
