@@ -1,7 +1,7 @@
 *** Work in progress ***
 # Add Security and User Personalization for an online Finance news portal using AppID
 
-There are two important aspects for any applications that you build - `Authentication and User Personalization`. 
+There are two important aspects for any application that you build - `Authentication and User Personalization`. 
 
 If you take authentication on online platforms, the support for `Social login` is common now. The users can login to the online portal using their Google or Facebook accounts. This method of authentication is beneficial both for online portals and end users. There is increased consumption and usability as there is no need to create a separate account on every online portal for authentication. The trust in the security provided by social media login has been increasing too. 
 
