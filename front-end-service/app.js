@@ -5,13 +5,13 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var request = require('request');
-var cfenv = require("cfenv");
+//var cfenv = require("cfenv");
 var app = express();
 
 // get the app environment from Cloud Foundry
-var appEnv = cfenv.getAppEnv();
-console.log("Application URL: ", appEnv.url);
-var appURL = appEnv.url;
+//var appEnv = cfenv.getAppEnv();
+//console.log("Application URL: ", appEnv.url);
+//var appURL = appEnv.url;
 
 //appid
 const session = require('express-session');							// https://www.npmjs.com/package/express-session
@@ -29,7 +29,7 @@ const config = {
 	clientId: process.env.clientId,
 	secret: process.env.secret,
 	oauthServerUrl: process.env.oauthServerUrl,
-  redirectUri: appURL + process.env.CALLBACK_URL,
+  redirectUri: process.env.APPLICATION_URL + process.env.CALLBACK_URL,
   profilesURL: process.env.profilesURL
 }
 
