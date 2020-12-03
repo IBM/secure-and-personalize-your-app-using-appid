@@ -19,12 +19,88 @@ When the reader has completed this Code Pattern, they will understand how to:
 
 ## Pre-requisites
 * [IBM Cloud account](https://www.ibm.com/cloud/): Create an IBM Cloud account.
+* [OpenShift Cluster](https://docs.openshift.com): You should have one OpenShift cluster, if you want to deploy your application on OpenShift.
 
 # Steps
 
 Please follow the below to setup and run this code pattern.
 
-1. [Clone the repo](#1-clone-the-repo)
-2. [Run locally](#2-run-locally)
-3. [Deploy and run on cloud](#3-deploy-and-run-on-cloud)
-4. [Analyze the results](#4-analyze-the-results)
+1. [Get the code](#1-get-the-code)
+2. [Create IBM Cloud Services]
+3. [Deploy News API Service]
+4. [Deploy User Management Service]
+5. [Deploy front-end service]
+6. [Access your application and analyze the results]
+
+### 1. Get the code
+
+Clone the repository using the below command.
+
+```
+git clone https://github.com/IBM/k8-secrets-as-hyperledger-fabric-wallet.git
+```
+
+### 2. Create IBM Cloud Services
+
+**Create Discovery Service**
+
+
+**Create App ID service instance**
+
+### 3.
+
+### 4.
+
+### 5. Deploy front-end service
+
+***Set the environment***
+
+  ```
+  $ cd front-end-service
+  $ cp .env.sample .env
+  ```
+
+  Update the environment file(.env) with appropriate values.
+
+***Deploy service***
+
+  Login to OpenShift. From the IBM Cloud console go to `Clusters > Your OpenShift Cluster > OpenShift web console`. From the OpenShift web console click the menu in the upper right corner (the label contains your email address), and select Copy Login Command. Click on Display token and paste the command into a terminal session.   For example:
+  ```
+  oc login --token=xxxx --server=https://xxxx.containers.cloud.ibm.com:xxx
+  ```
+  
+  Navigate to the directory where you cloned the code.
+
+  ```
+  $ cd front-end-service
+  $ oc new-app --name=<your-app-name> .
+  $ oc start-build <your-app-name> --from-dir=.
+  
+  ## build status can be checked using following command
+  $ oc logs -f bc/<your-app-name>
+
+  ## app deployment status can be checked using below command
+  $ oc status        # it should show that 1 pod is deployed for your app
+
+  $ oc expose svc/<your-app-name>
+  $ oc get routes <your-app-name>  ## copy full route for next step
+
+  # this route will be used by AppID for callback URL, so lets update deployment config before accessing the application
+  $ oc set env dc/<your-app-name> APPLICATION_URL=http://<your-application-route>
+  ```
+
+Need to update this callback URL in AppID as well. Go to `IBM Cloud dashboard -> Services -> <your AppID service> -> Manage Authentication`.
+Select `Authentication Settings` and in `Add web redirect URLs` section, add the following URL.
+
+```
+http://<your-application-route>/callback
+```
+
+Now you are all set to access your application.
+
+### 6. Access your application and analyze the results
+
+Access your application route `http://<your application-route>` on any browser.
+
+
+
