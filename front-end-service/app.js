@@ -1,20 +1,22 @@
+require('dotenv').config();
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var request = require('request');
+var cfenv = require("cfenv");
 var app = express();
 
-//appid configuration
+// get the app environment from Cloud Foundry
+var appEnv = cfenv.getAppEnv();
+console.log("Application URL: ", appEnv.url);
+var appURL = appEnv.url;
+
+//appid
 const session = require('express-session');							// https://www.npmjs.com/package/express-session
 const passport = require('passport');								// https://www.npmjs.com/package/passport
 const WebAppStrategy = require('ibmcloud-appid').WebAppStrategy;	// https://www.npmjs.com/package/ibmcloud-appid
-
-const CALLBACK_URL = "/callback";
-const NEWS_SERVICE_URL = "";
-const PERSONALISED_NEWS_URL = "";
-const USER_MGMT_SERVICE_URL = "";
 
 app.use(session({
 	secret: '123456',
@@ -23,12 +25,12 @@ app.use(session({
 }));
 
 const config = {
-	tenantId: "xxxx",
-	clientId: "xxxx",
-	secret: "xxxx",
-	oauthServerUrl: "xxxx",
-  redirectUri: "http://localhost:3000" + CALLBACK_URL,
-  profilesURL: "xxxx"
+	tenantId: process.env.tenantId,
+	clientId: process.env.clientId,
+	secret: process.env.secret,
+	oauthServerUrl: process.env.oauthServerUrl,
+  redirectUri: appURL + process.env.CALLBACK_URL,
+  profilesURL: process.env.profilesURL
 }
 
 app.use(passport.initialize());
@@ -36,12 +38,14 @@ app.use(passport.session());
 passport.serializeUser((user, cb) => cb(null, user));
 passport.deserializeUser((user, cb) => cb(null, user));
 passport.use(new WebAppStrategy(config));
-//app id configuration end
+
+//app id end
 
 var usersRouter = require('./routes/users');
 var newsRouter = require('./routes/news');
 var preferenceRouter = require('./routes/preferences');
 var persnoalisedNewsRouter = require('./routes/personalised-news');
+var updatePreferenceRouter = require('./routes/update-preferences');
 
 
 // view engine setup
@@ -54,30 +58,35 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+
 app.use('/', newsRouter);
 app.use('/preferences', preferenceRouter);
 app.use('/personalised-news', persnoalisedNewsRouter);
+app.use('/update-preferences', updatePreferenceRouter);
 app.use('/users', usersRouter);
 
 //app id
 
-app.get(CALLBACK_URL, passport.authenticate(WebAppStrategy.STRATEGY_NAME));
+app.get(process.env.CALLBACK_URL, passport.authenticate(WebAppStrategy.STRATEGY_NAME));
 
-// to personalize - appid signin
+// app.get('/personalize', passport.authenticate(WebAppStrategy.STRATEGY_NAME, {
+//                                                 successRedirect: LANDING_PAGE_URL})
+// );
+
 app.get('/personalize', passport.authenticate(WebAppStrategy.STRATEGY_NAME), function (req,res) {
 
   let accessToken = req.session[WebAppStrategy.AUTH_CONTEXT].accessToken;
   console.log("\n@server - In personalize function (after social sign-in) - ");
   console.log("\nUserName: ", req.user.name);
-  console.log("Access token: ", accessToken);
+  // console.log("Access token: ", accessToken);
 
   var options = {
     method : 'GET',
-    url : USER_MGMT_SERVICE_URL,
+    url : process.env.CHECK_USER_PREFERENCES_URL,
     headers: {
       'Authorization': 'Bearer '+ accessToken,
       'Content-Type': 'application/json'
-    }
+    }    
   };
   console.log("\nCalling User management service... ");
   request.get(options, function(error, response, body){
@@ -92,9 +101,9 @@ app.get('/personalize', passport.authenticate(WebAppStrategy.STRATEGY_NAME), fun
   });
 });
 
-// to set preferences in appid user profile
 app.post("/set-preferences", passport.authenticate(WebAppStrategy.STRATEGY_NAME), function(req, res){
   console.log("\n@ server - in set-preferences function");
+  // console.log(req.session[WebAppStrategy.AUTH_CONTEXT].accessToken);
   console.log(JSON.stringify(req.body));
 
   if (JSON.stringify(req.body) === '{}'){
@@ -102,10 +111,10 @@ app.post("/set-preferences", passport.authenticate(WebAppStrategy.STRATEGY_NAME)
     res.redirect('/preferences');
   } else {
       let accessToken = req.session[WebAppStrategy.AUTH_CONTEXT].accessToken;
-      console.log("\nAccess token: ", accessToken);
+      // console.log("\nAccess token: ", accessToken);
       var options = {
         method : 'POST',
-        url : USER_MGMT_SERVICE_URL,
+        url : process.env.USER_MGMT_SERVICE_URL,
         headers: {
           'Authorization': 'Bearer '+ accessToken,
           'Content-Type': 'application/json'
@@ -114,33 +123,32 @@ app.post("/set-preferences", passport.authenticate(WebAppStrategy.STRATEGY_NAME)
         json : true
       };
       request.post(options, function(error, response, body){
+        // console.log(response);
         console.log("\nUser preferences has been set/updated, redirecting to personalized news...\n");
         res.redirect('/personalised-news');
       });
   }
 });
 
-// to update preference in appid profile
 app.get('/update-preferences', passport.authenticate(WebAppStrategy.STRATEGY_NAME), function(req,res){
   res.redirect('/preferences');
 })
 
-//to logout
 app.get('/logout', function(req,res){
   console.log("in logout...\n",req);
   WebAppStrategy.logout(req);
   console.log("\nUser has logged-out!")
   res.redirect('/');
 })
-//app id code end
+//app id end
 
-// Get Generic Finance News
+// Get Finance News
 app.get ('/getFinanceNews', function(req,res) {
   console.log("\n@server - in getFinanceNews function");
-  
+
   var options = {
     method : 'GET',
-    url : NEWS_SERVICE_URL,
+    url : process.env.NEWS_SERVICE_URL,
     json : true
   };
   console.log("\nCalling News API powered by Watson Discovery Service...");
@@ -150,21 +158,22 @@ app.get ('/getFinanceNews', function(req,res) {
       res.json({"message":"Error"});
     } else {
       console.log("\nLoading the news result.. ");
-      console.log(JSON.stringify(body));
+      // console.log(JSON.stringify(body));
+      console.log("\nNews Result Length:",body.length);
       res.status(response.statusCode).send(body);
     }
   });
 });
 
-// Get Personalized Finance News
+// Get Personalised Finance News
 app.get ('/getPersonalisedFinanceNews', passport.authenticate(WebAppStrategy.STRATEGY_NAME), function(req,res) {
   console.log("\n@server - in getPersonalisedFinanceNews function...");
-
+  
   let accessToken = req.session[WebAppStrategy.AUTH_CONTEXT].accessToken;
-  console.log("Access token: ", accessToken);
+  // console.log("Access token: ", accessToken);
   var options = {
     method : 'GET',
-    url : PERSONALISED_NEWS_URL,
+    url : process.env.PERSONALISED_NEWS_URL,
     headers: {
       'Authorization': 'Bearer '+ accessToken,
       'Content-Type': 'application/json'
@@ -178,7 +187,8 @@ app.get ('/getPersonalisedFinanceNews', passport.authenticate(WebAppStrategy.STR
       res.json({"message":"Error"});
     } else {
       console.log("\nLoading the personalized news result... ");
-      console.log(JSON.stringify(body));
+      // console.log(JSON.stringify(body));
+      console.log("\nNews Result Length:",body.length);
       res.status(response.statusCode).send(body);
     }
   });
