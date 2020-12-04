@@ -74,11 +74,11 @@ Login to OpenShift. From the IBM Cloud console go to `Clusters > Your OpenShift 
     $ cp .env.sample .env
     ```
 
-    Update the environment file(.env) with appropriate values.
-
+   Update the environment file(.env) with appropriate values.
+   
   ***Deploy service***
-
-    Navigate to the directory `front-end-service`.
+  
+   Navigate to the directory `front-end-service`.
 
     ```
     $ cd front-end-service
