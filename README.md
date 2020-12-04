@@ -54,6 +54,37 @@ git clone https://github.com/IBM/k8-secrets-as-hyperledger-fabric-wallet.git
 
 #### 3.3 Deploy front-end service
 
+  ***Set the environment***
+
+    ```
+    $ cd front-end-service
+    $ cp .env.sample .env
+    ```
+
+   Update the environment file(.env) with appropriate values.
+   
+  ***Deploy service***
+  
+   Navigate to the directory `front-end-service`.
+   
+   ```
+   $ cd front-end-service
+   $ ibmcloud cf push <your-app-name>
+   
+   ## Get your application URL
+   $ ibmcloud cf apps
+   ```
+   
+   Need to update this callback URL in AppID as well. Go to `IBM Cloud dashboard -> Services -> <your AppID service> -> Manage Authentication`.
+  Select `Authentication Settings` and in `Add web redirect URLs` section, add the following URL.
+
+  ```
+  https://<your-application-route>/callback
+  ```
+
+  Now you are all set to access your application.
+   
+
 ### 4. Deploy on OpenShift
 
 Login to OpenShift. From the IBM Cloud console go to `Clusters > Your OpenShift Cluster > OpenShift web console`. From the OpenShift web console click the menu in the upper right corner (the label contains your email address), and select Copy Login Command. Click on Display token and paste the command into a terminal session.   For example:
