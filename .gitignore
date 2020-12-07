@@ -1,3 +1,4 @@
 BackendService-NewsAPI/node_modules
 BackendService-User-Mgmt/node_modules
 .vscode/launch.json
+.DS_Store
