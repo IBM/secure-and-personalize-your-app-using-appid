@@ -50,93 +50,200 @@ git clone https://github.com/IBM/k8-secrets-as-hyperledger-fabric-wallet.git
 
 #### 3.1 Deploy news API service
 
+***Set the environment***
+
+    $ cd news-api-service
+    $ cp .env.sample .env
+
+Update the environment file(.env) with appropriate values.
+
+***Deploy service***
+
+Navigate to the directory `news-api-service`.
+
+   ```
+$ cd news-api-service
+$ ibmcloud cf push <your-app-name>
+
+## Get your application URL
+$ ibmcloud cf apps
+   ```
+
+Make a note of this News API Service application URL. This is needed in below steps.
+
+
+
 #### 3.2 Deploy user management service
+
+***Set the environment***
+
+    $ cd user-management-service
+    $ cp .env.sample .env
+
+Update the environment file(.env) with appropriate values.
+
+***Deploy service***
+
+Navigate to the directory `user-management-service`.
+
+   ```
+$ cd user-management-service
+$ ibmcloud cf push <your-app-name>
+
+## Get your application URL
+$ ibmcloud cf apps
+   ```
+
+Make a note of this User Management Service application URL. This is needed in below steps.
+
+
 
 #### 3.3 Deploy front-end service
 
-  ***Set the environment***
+ ***Set the environment***
 
-    ```
     $ cd front-end-service
     $ cp .env.sample .env
-    ```
 
-   Update the environment file(.env) with appropriate values.
-   
-  ***Deploy service***
-  
-   Navigate to the directory `front-end-service`.
-   
+ Update the environment file(.env) with appropriate values.
+
+ ***Deploy service***
+
+ Navigate to the directory `front-end-service`.
+
    ```
-   $ cd front-end-service
-   $ ibmcloud cf push <your-app-name>
-   
-   ## Get your application URL
-   $ ibmcloud cf apps
+$ cd front-end-service
+$ ibmcloud cf push <your-app-name>
+
+## Get your application URL
+$ ibmcloud cf apps
    ```
-   
-   Need to update this callback URL in AppID as well. Go to `IBM Cloud dashboard -> Services -> <your AppID service> -> Manage Authentication`.
-  Select `Authentication Settings` and in `Add web redirect URLs` section, add the following URL.
+
+Need to update this callback URL in AppID as well. Go to `IBM Cloud dashboard -> Services -> <your AppID service> -> Manage Authentication`.
+
+Select `Authentication Settings` and in `Add web redirect URLs` section, add the following URL.
 
   ```
-  https://<your-application-route>/callback
+https://<your-application-route>/callback
   ```
 
-  Now you are all set to access your application.
-   
+Now you are all set to access your application.
+
+
+
 
 ### 4. Deploy on OpenShift
 
 Login to OpenShift. From the IBM Cloud console go to `Clusters > Your OpenShift Cluster > OpenShift web console`. From the OpenShift web console click the menu in the upper right corner (the label contains your email address), and select Copy Login Command. Click on Display token and paste the command into a terminal session.   For example:
   ```
-  oc login --token=xxxx --server=https://xxxx.containers.cloud.ibm.com:xxx
+oc login --token=xxxx --server=https://xxxx.containers.cloud.ibm.com:xxx
   ```
-  
+
 #### 4.1 Deploy news API service
+
+ ***Set the environment***
+
+    $ cd news-api-service
+    $ cp .env.sample .env
+
+Update the environment file(.env) with appropriate values.
+
+***Deploy service***
+
+Navigate to the directory `news-api-service`.
+
+    $ cd news-api-service
+    $ oc new-app --name=<your-app-name> .
+    $ oc start-build <your-app-name> --from-dir=.
+    
+    ## build status can be checked using following command
+    $ oc logs -f bc/<your-app-name>
+    
+    ## app deployment status can be checked using below command
+    $ oc status        # it should show that 1 pod is deployed for your app
+    
+    $ oc expose svc/<your-app-name>
+    $ oc get routes <your-app-name>  ## copy full route for next step
+    
+    # this route will be used by AppID for callback URL, so lets update deployment config before accessing the application
+    $ oc set env dc/<your-app-name> APPLICATION_URL=http://<your-application-route>
+
+Make a note of this News API Service application URL. This is needed in below steps.
+
+
 
 #### 4.2 Deploy user management service
 
+***Set the environment***
+
+    $ cd user-management-service
+    $ cp .env.sample .env
+
+Update the environment file(.env) with appropriate values.
+
+***Deploy service***
+
+Navigate to the directory `user-management-service	`.
+
+    $ cd user-management-service
+    $ oc new-app --name=<your-app-name> .
+    $ oc start-build <your-app-name> --from-dir=.
+    
+    ## build status can be checked using following command
+    $ oc logs -f bc/<your-app-name>
+    
+    ## app deployment status can be checked using below command
+    $ oc status        # it should show that 1 pod is deployed for your app
+    
+    $ oc expose svc/<your-app-name>
+    $ oc get routes <your-app-name>  ## copy full route for next step
+    
+    # this route will be used by AppID for callback URL, so lets update deployment config before accessing the application
+    $ oc set env dc/<your-app-name> APPLICATION_URL=http://<your-application-route>
+
+Make a note of this User Management Service application URL. This is needed in below steps.
+
+
+
 #### 4.3 Deploy front-end service
 
-  ***Set the environment***
+ ***Set the environment***
 
-    ```
     $ cd front-end-service
     $ cp .env.sample .env
-    ```
 
-   Update the environment file(.env) with appropriate values.
-   
-  ***Deploy service***
-  
-   Navigate to the directory `front-end-service`.
+Update the environment file(.env) with appropriate values.
 
-    ```
+***Deploy service***
+
+Navigate to the directory `front-end-service`.
+
     $ cd front-end-service
     $ oc new-app --name=<your-app-name> .
     $ oc start-build <your-app-name> --from-dir=.
-
+    
     ## build status can be checked using following command
     $ oc logs -f bc/<your-app-name>
-
+    
     ## app deployment status can be checked using below command
     $ oc status        # it should show that 1 pod is deployed for your app
-
+    
     $ oc expose svc/<your-app-name>
     $ oc get routes <your-app-name>  ## copy full route for next step
-
+    
     # this route will be used by AppID for callback URL, so lets update deployment config before accessing the application
     $ oc set env dc/<your-app-name> APPLICATION_URL=http://<your-application-route>
-    ```
 
-  Need to update this callback URL in AppID as well. Go to `IBM Cloud dashboard -> Services -> <your AppID service> -> Manage Authentication`.
-  Select `Authentication Settings` and in `Add web redirect URLs` section, add the following URL.
+Need to update this callback URL in AppID as well. Go to `IBM Cloud dashboard -> Services -> <your AppID service> -> Manage Authentication`.
+Select `Authentication Settings` and in `Add web redirect URLs` section, add the following URL.
 
   ```
-  http://<your-application-route>/callback
+http://<your-application-route>/callback
   ```
 
-  Now you are all set to access your application.
+Now you are all set to access your application.
+
+
 
 ### 6. Access your application and analyze the results
 

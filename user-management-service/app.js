@@ -89,6 +89,8 @@ function getPreferencesAsString(pref) {
 	return prefString;
 }
 
+
+
 app.get("/is-user-preferences-set", passport.authenticate(APIStrategy.STRATEGY_NAME, { session: false }), function (req, res) {
 	console.log("In Get User Preferences")
 	var accessToken = req.headers['authorization'].split(' ')[1];
