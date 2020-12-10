@@ -3,7 +3,7 @@ var bodyParser = require('body-parser');
 queryBuilder = require("./query-builder");
 samples = require("./samples");
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3002;
 
 const express = require('express');
 const passport = require('passport');
