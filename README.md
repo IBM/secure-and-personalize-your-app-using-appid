@@ -43,6 +43,15 @@ git clone https://github.com/IBM/k8-secrets-as-hyperledger-fabric-wallet.git
 
 **Create Discovery Service**
 
+Logon to [IBM Cloud](https://cloud.ibm.com) . 
+
+Click on `Catalog` in top menu bar. Under `IBM Cloud products` search for `Discovery`. Click on `Discovery` tile that gets listed.
+
+Select `Lite` plan, if not already selected, then click `Create` to create an instance of Watson Discovery service. When Discovery instance is created in a minute or two, make a note of `Service credentails` in a text file. These will be needed in later steps.
+
+![image-20201210155703629](./images/image-20201210155703629.png)
+
+
 
 **Create App ID service instance**
 
