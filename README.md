@@ -55,7 +55,17 @@ Select `Lite` plan, if not already selected, then click `Create` to create an in
 
 **Create App ID service instance**
 
-### 3. Deploy on IBM Cloud
+Logon to [IBM Cloud](https://cloud.ibm.com) . 
+
+Click on `Catalog` in top menu bar. Under `IBM Cloud products` search for `App ID`. Click on `App ID` tile that gets listed.
+
+Select `Lite` plan, if not already selected, then click `Create` to create an instance of App ID. When App ID instance is created, make a note of service credentials. If service credentials are not available by default, you can create new credentials as shown in below image.
+
+![image-20201211165207271](/Users/murali/Documents/Murali/Work/01Code Patterns/1Projects/2020/15AppID/Git Repo/images/image-20201211165207271.png)
+
+Make a note of `Service credentails` in a text file. These will be needed in later steps.
+
+### 3. Deploy on Cloud Foundry (on IBM Cloud)
 
 #### 3.1 Deploy news API service
 
@@ -141,7 +151,7 @@ Now you are all set to access your application.
 
 
 
-### 4. Deploy on OpenShift
+### 4. Deploy on OpenShift (on IBM Cloud)
 
 Login to OpenShift. From the IBM Cloud console go to `Clusters > Your OpenShift Cluster > OpenShift web console`. From the OpenShift web console click the menu in the upper right corner (the label contains your email address), and select Copy Login Command. Click on Display token and paste the command into a terminal session.   For example:
   ```
