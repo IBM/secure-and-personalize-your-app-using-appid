@@ -161,7 +161,7 @@ Make a note of this application URL and the end points. These are needed in belo
 
    Go to `IBM Cloud dashboard -> Services -> <your AppID service> -> Manage Authentication`.
 
-   ![add-callback-url](./images/appid-snapshot.png]
+   ![add-callback-url](./images/appid-snapshot.png)
    
    Select `Authentication Settings` and in `Add web redirect URLs` section, add the following URL.
 
@@ -270,7 +270,7 @@ Make a note of this application URL and the end points. These are needed in belo
 
    Go to `IBM Cloud dashboard -> Services -> <your AppID service> -> Manage Authentication`. 
    
-   ![add-callback-url](./images/appid-snapshot.png]
+   ![add-callback-url](./images/appid-snapshot.png)
    
    Select `Authentication Settings` and in `Add web redirect URLs` section, add the following URL.
 
