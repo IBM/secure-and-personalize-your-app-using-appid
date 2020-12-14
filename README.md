@@ -40,11 +40,8 @@ Please follow the below to setup and run this code pattern.
 1. [Get the code](#1-get-the-code)
 2. [Create IBM Cloud Services](#2-create-ibm-cloud-services)
 3. [Deploy Application](#3-deploy-application)
-
-3.1 [Deploy on Cloud Foundry (IBM Cloud)](#3-1-deploy-on-cloud-foundry-ibm-cloud)
-
-3.2 [Deploy on OpenShift]
-
+3.1 [Deploy on Cloud Foundry (on IBM Cloud)](#3-1-deploy-on-cloud-foundry-on-ibm-cloud)
+3.2 [Deploy on OpenShift (on IBM Cloud)](#3-2-deploy-on-openshift-on-ibm-cloud)
 4. [Access your application and analyze the results](#4-access-your-application-and-analyze-the-results)
 
 ### 1. Get the code
@@ -59,7 +56,7 @@ git clone https://github.com/IBM/k8-secrets-as-hyperledger-fabric-wallet.git
 
 **Create Discovery Service**
 
-Logon to [IBM Cloud](https://cloud.ibm.com) . 
+Login to [IBM Cloud](https://cloud.ibm.com) . 
 
 Click on `Catalog` in top menu bar. Under `IBM Cloud products` search for `Discovery`. Click on `Discovery` tile that gets listed.
 
@@ -71,7 +68,7 @@ Select `Lite` plan, if not already selected, then click `Create` to create an in
 
 **Create App ID service instance**
 
-Logon to [IBM Cloud](https://cloud.ibm.com) . 
+Login to [IBM Cloud](https://cloud.ibm.com) . 
 
 Click on `Catalog` in top menu bar. Under `IBM Cloud products` search for `App ID`. Click on `App ID` tile that gets listed.
 
