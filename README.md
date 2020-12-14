@@ -282,7 +282,7 @@ Make a note of this News API Service URL. This will be used in later steps.
 
 Access your front end service URL on any browser. You can explore the application as shown here.
 
-![demo_video]()
+![demo_video](https://youtu.be/aQEaWcUePOk)
 
 In this application, 
 * Generic News API service returns top 10 finance news of the last three days. This configuration can be changed in News API service.
