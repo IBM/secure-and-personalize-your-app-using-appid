@@ -17,6 +17,9 @@ When the reader has completed this Code Pattern, they will understand how to:
 
 ## Flow
 
+![arch](images/architecture.png)
+
+
 ## Pre-requisites
 * [IBM Cloud account](https://www.ibm.com/cloud/): Create an IBM Cloud account.
 * [OpenShift Cluster](https://docs.openshift.com): You should have one OpenShift cluster, if you want to deploy your application on OpenShift.
