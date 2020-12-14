@@ -1,4 +1,5 @@
 *** Work in progress ***
+
 # Add Security and User Personalization for an online Finance news portal using AppID
 
 There are two important aspects for any application that you build - `Authentication and User Personalization`. 
@@ -40,8 +41,8 @@ Please follow the below to setup and run this code pattern.
  1. [Get the code](#1-get-the-code)  
  2. [Create IBM Cloud Services](#2-create-ibm-cloud-services)  
  3. [Deploy Application](#3-deploy-application)  
-  3.1 [Deploy on Cloud Foundry](#3.1-deploy-on-cloud-foundry)  
-  3.2 [Deploy on OpenShift](#3.2-deploy-on-openshift)  
+    3.1 [Deploy on Cloud Foundry](#3.1-deploy-on-cloud-foundry)  
+    3.2 [Deploy on OpenShift](#3.2-deploy-on-openshift)  
  4. [Access your application and analyze the results](#4-access-your-application-and-analyze-the-results)  
 
 ### 1. Get the code
@@ -95,7 +96,7 @@ ibmcloud login [--sso]
     $ cd news-api-service
     $ cp .env.sample .env
 
-   Update the environment file(.env) with appropriate values.
+   Update the environment file(.env) with appropriate values from the credentials data noted in `**Create Discovery Service**` section.
 
    ***Deploy service***
 
@@ -107,12 +108,7 @@ ibmcloud login [--sso]
     ## Get your application URL
     $ ibmcloud cf apps
 
-There are two API endpoints at this application url. 
-
-- Generic News: <application url>/generic-news
-- Personalized News: <application url>/personalized-news
-
-Make a note of this application URL and the end points. These are needed in below steps.
+Make a note of this News API Service URL. This will be used in later steps.
 
 
    #### 3.1.2 Deploy user management service
@@ -162,7 +158,7 @@ Make a note of this application URL and the end points. These are needed in belo
    Go to `IBM Cloud dashboard -> Services -> <your AppID service> -> Manage Authentication`.
 
    ![add-callback-url](./images/appid-snapshot.png)
-   
+
    Select `Authentication Settings` and in `Add web redirect URLs` section, add the following URL.
 
    ```
@@ -269,9 +265,9 @@ Make a note of this application URL and the end points. These are needed in belo
    ***Update Callback URL in App ID***
 
    Go to `IBM Cloud dashboard -> Services -> <your AppID service> -> Manage Authentication`. 
-   
+
    ![add-callback-url](./images/appid-snapshot.png)
-   
+
    Select `Authentication Settings` and in `Add web redirect URLs` section, add the following URL.
 
    ```
