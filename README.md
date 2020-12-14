@@ -19,6 +19,12 @@ When the reader has completed this Code Pattern, they will understand how to:
 
 ![arch](images/architecture.png)
 
+1. User accesses the client webapp interface (front end service).
+2. The front end service fetches the finance news from News API service and loads on the landing page of webapp.
+3. User needs to login to get personalized news.
+4. User does social sign-in powered by AppId and set his preferences.
+5. After sign-in, front end service fetches the finance news based on user's profile and preferences and shows personalized news.
+6. User can update his preferences (if required) and then application shows personalized news accordingly.
 
 ## Pre-requisites
 * [IBM Cloud account](https://www.ibm.com/cloud/): Create an IBM Cloud account.
@@ -30,9 +36,10 @@ Please follow the below to setup and run this code pattern.
 
 1. [Get the code](#1-get-the-code)
 2. [Create IBM Cloud Services]
-3. [Deploy on IBM Cloud]
-4. [Deploy on OpenShift]
-5. [Access your application and analyze the results]
+3. [Deploy Application]
+3.1 [Deploy on Cloud Foundry (IBM Cloud)]
+3.2 [Deploy on OpenShift]
+4. [Access your application and analyze the results]
 
 ### 1. Get the code
 
@@ -68,113 +75,186 @@ Select `Lite` plan, if not already selected, then click `Create` to create an in
 
 Make a note of `Service credentails` in a text file. These will be needed in later steps.
 
-### 3. Deploy on Cloud Foundry (on IBM Cloud)
+### 3. Deploy Application
 
-#### 3.1 Deploy news API service
+  ### 3.1 Deploy on Cloud Foundry (on IBM Cloud)
 
-***Set the environment***
+   #### 3.1.1 Deploy news API service
 
+   ***Set the environment***
+
+    ```
     $ cd news-api-service
     $ cp .env.sample .env
+    ```
+   Update the environment file(.env) with appropriate values.
 
-Update the environment file(.env) with appropriate values.
+   ***Deploy service***
 
-***Deploy service***
-
-Navigate to the directory `news-api-service`.
+   Navigate to the directory `news-api-service`.
 
    ```
-$ cd news-api-service
-$ ibmcloud cf push <your-app-name>
+    $ cd news-api-service
+    $ ibmcloud cf push <your-app-name>
 
-## Get your application URL
-$ ibmcloud cf apps
+    ## Get your application URL
+    $ ibmcloud cf apps
    ```
 
-Make a note of this News API Service application URL. This is needed in below steps.
+   Make a note of this News API Service application URL. This is needed in below steps.
 
 
+   #### 3.1.2 Deploy user management service
 
-#### 3.2 Deploy user management service
-
-***Set the environment***
-
+   ***Set the environment***
+    
+    ```
     $ cd user-management-service
     $ cp .env.sample .env
+    ```
+    
+   Update the environment file(.env) with appropriate values.
 
-Update the environment file(.env) with appropriate values.
+   ***Deploy service***
 
-***Deploy service***
-
-Navigate to the directory `user-management-service`.
+   Navigate to the directory `user-management-service`.
 
    ```
-$ cd user-management-service
-$ ibmcloud cf push <your-app-name>
+    $ cd user-management-service
+    $ ibmcloud cf push <your-app-name>
 
-## Get your application URL
-$ ibmcloud cf apps
+    ## Get your application URL
+    $ ibmcloud cf apps
    ```
 
-Make a note of this User Management Service application URL. This is needed in below steps.
+   Make a note of this User Management Service application URL. This is needed in below steps.
 
+   #### 3.1.3 Deploy front-end service
 
+   ***Set the environment***
 
-#### 3.3 Deploy front-end service
-
- ***Set the environment***
-
+    ```
     $ cd front-end-service
     $ cp .env.sample .env
+    ```
+    
+   Update the environment file(.env) with appropriate values of App ID credentials and URL of previously deployed services.
 
- Update the environment file(.env) with appropriate values.
+   ***Deploy service***
 
- ***Deploy service***
-
- Navigate to the directory `front-end-service`.
+   Navigate to the directory `front-end-service`.
 
    ```
-$ cd front-end-service
-$ ibmcloud cf push <your-app-name>
+    $ cd front-end-service
+    $ ibmcloud cf push <your-app-name>
 
-## Get your application URL
-$ ibmcloud cf apps
+    ## Get your application URL
+    $ ibmcloud cf apps
+   ```
+    
+   Make a note of this Front End Service application URL. This is needed in next step.
+   
+   ***Update Callback URL in APP ID***
+   
+   Go to `IBM Cloud dashboard -> Services -> <your AppID service> -> Manage Authentication`.
+
+   Select `Authentication Settings` and in `Add web redirect URLs` section, add the following URL.
+
+   ```
+   https://<your-front-end-service-application-url>/callback
    ```
 
-Need to update this callback URL in AppID as well. Go to `IBM Cloud dashboard -> Services -> <your AppID service> -> Manage Authentication`.
+   Now you are all set to access your application.
 
-Select `Authentication Settings` and in `Add web redirect URLs` section, add the following URL.
 
+  ### 3.2 Deploy on OpenShift (on IBM Cloud)
+
+   Login to OpenShift. From the IBM Cloud console go to `Clusters > Your OpenShift Cluster > OpenShift web console`. From the OpenShift web console click the menu in the upper right corner (the label contains your email address), and select Copy Login Command. Click on Display token and paste the command into a terminal session. For example:
   ```
-https://<your-application-route>/callback
-  ```
-
-Now you are all set to access your application.
-
-
-
-
-### 4. Deploy on OpenShift (on IBM Cloud)
-
-Login to OpenShift. From the IBM Cloud console go to `Clusters > Your OpenShift Cluster > OpenShift web console`. From the OpenShift web console click the menu in the upper right corner (the label contains your email address), and select Copy Login Command. Click on Display token and paste the command into a terminal session.   For example:
-  ```
-oc login --token=xxxx --server=https://xxxx.containers.cloud.ibm.com:xxx
+  oc login --token=xxxx --server=https://xxxx.containers.cloud.ibm.com:xxx
   ```
 
-#### 4.1 Deploy news API service
+   #### 3.2.1 Deploy news API service
 
- ***Set the environment***
+   ***Set the environment***
 
+    ```
     $ cd news-api-service
     $ cp .env.sample .env
+    ```
+    
+   Update the environment file(.env) with appropriate values.
 
-Update the environment file(.env) with appropriate values.
+   ***Deploy service***
 
-***Deploy service***
+   Navigate to the directory `news-api-service`.
 
-Navigate to the directory `news-api-service`.
-
+    ```
     $ cd news-api-service
+    $ oc new-app --name=<your-app-name> .
+    $ oc start-build <your-app-name> --from-dir=.
+    
+    ## build status can be checked using following command
+    $ oc logs -f bc/<your-app-name>
+    
+    ## app deployment status can be checked using below command
+    $ oc status        # it should show that 1 pod is deployed for your app
+    
+    $ oc expose svc/<your-app-name>
+    $ oc get routes <your-app-name>  ## copy full route for next step
+    ```
+    
+   Make a note of this News API Service application URL. This is needed in below steps.
+
+   #### 3.2.2 Deploy user management service
+
+   ***Set the environment***
+
+    ```
+    $ cd user-management-service
+    $ cp .env.sample .env
+    ```
+    
+   Update the environment file(.env) with appropriate values.
+
+   ***Deploy service***
+
+   Navigate to the directory `user-management-service`.
+
+    ```
+    $ cd user-management-service
+    $ oc new-app --name=<your-app-name> .
+    $ oc start-build <your-app-name> --from-dir=.
+    
+    ## build status can be checked using following command
+    $ oc logs -f bc/<your-app-name>
+    
+    ## app deployment status can be checked using below command
+    $ oc status        # it should show that 1 pod is deployed for your app
+    
+    $ oc expose svc/<your-app-name>
+    $ oc get routes <your-app-name>  ## copy full route for next step
+    ```
+
+   Make a note of this User Management Service application URL. This is needed in below steps.
+
+   #### 3.2.3 Deploy front-end service
+
+   ***Set the environment***
+
+    ```
+    $ cd front-end-service
+    $ cp .env.sample .env
+    ```
+    
+   Update the environment file(.env) with appropriate values.
+
+   ***Deploy service***
+
+   Navigate to the directory `front-end-service`.
+
+    ```
+    $ cd front-end-service
     $ oc new-app --name=<your-app-name> .
     $ oc start-build <your-app-name> --from-dir=.
     
@@ -189,87 +269,34 @@ Navigate to the directory `news-api-service`.
     
     # this route will be used by AppID for callback URL, so lets update deployment config before accessing the application
     $ oc set env dc/<your-app-name> APPLICATION_URL=http://<your-application-route>
+    ```
 
-Make a note of this News API Service application URL. This is needed in below steps.
+   ***Update Callback URL in APP ID***
 
-
-
-#### 4.2 Deploy user management service
-
-***Set the environment***
-
-    $ cd user-management-service
-    $ cp .env.sample .env
-
-Update the environment file(.env) with appropriate values.
-
-***Deploy service***
-
-Navigate to the directory `user-management-service	`.
-
-    $ cd user-management-service
-    $ oc new-app --name=<your-app-name> .
-    $ oc start-build <your-app-name> --from-dir=.
-    
-    ## build status can be checked using following command
-    $ oc logs -f bc/<your-app-name>
-    
-    ## app deployment status can be checked using below command
-    $ oc status        # it should show that 1 pod is deployed for your app
-    
-    $ oc expose svc/<your-app-name>
-    $ oc get routes <your-app-name>  ## copy full route for next step
-    
-    # this route will be used by AppID for callback URL, so lets update deployment config before accessing the application
-    $ oc set env dc/<your-app-name> APPLICATION_URL=http://<your-application-route>
-
-Make a note of this User Management Service application URL. This is needed in below steps.
-
-
-
-#### 4.3 Deploy front-end service
-
- ***Set the environment***
-
-    $ cd front-end-service
-    $ cp .env.sample .env
-
-Update the environment file(.env) with appropriate values.
-
-***Deploy service***
-
-Navigate to the directory `front-end-service`.
-
-    $ cd front-end-service
-    $ oc new-app --name=<your-app-name> .
-    $ oc start-build <your-app-name> --from-dir=.
-    
-    ## build status can be checked using following command
-    $ oc logs -f bc/<your-app-name>
-    
-    ## app deployment status can be checked using below command
-    $ oc status        # it should show that 1 pod is deployed for your app
-    
-    $ oc expose svc/<your-app-name>
-    $ oc get routes <your-app-name>  ## copy full route for next step
-    
-    # this route will be used by AppID for callback URL, so lets update deployment config before accessing the application
-    $ oc set env dc/<your-app-name> APPLICATION_URL=http://<your-application-route>
-
-Need to update this callback URL in AppID as well. Go to `IBM Cloud dashboard -> Services -> <your AppID service> -> Manage Authentication`.
-Select `Authentication Settings` and in `Add web redirect URLs` section, add the following URL.
+   Go to `IBM Cloud dashboard -> Services -> <your AppID service> -> Manage Authentication`. Select `Authentication Settings` and in `Add web redirect URLs` section, add the following URL.
 
   ```
-http://<your-application-route>/callback
+  http://<your-application-route>/callback
   ```
 
-Now you are all set to access your application.
+   Now you are all set to access your application.
 
 
+### 4. Access your application and analyze the results
 
-### 6. Access your application and analyze the results
-
-Access your application route `http://<your application-route>` on any browser.
-
+Access your front end service URL on any browser. You can explore the application as shown here.
 
 
+In this application, 
+* News API service returns top 10 finance news of the last one week. This configuration can be changed at Discovery service.
+* Application uses only Facebook and Google sign-in. Other ways of authentication can also be explored in App ID and used as per the requirement.
+* From the user's social media profile, this application uses user's name only. There are other attributes which can be used for more personalization in the application. The user's email id can be used for email notification in the application. You may use user's photo as well retrieved from Facebook profile.
+
+## Learn More
+
+
+## License
+
+This code pattern is licensed under the Apache Software License, Version 2. Separate third-party code objects invoked within this code pattern are licensed by their respective providers pursuant to their own separate licenses. Contributions are subject to the [Developer Certificate of Origin, Version 1.1 (DCO)](https://developercertificate.org/) and the [Apache Software License, Version 2](https://www.apache.org/licenses/LICENSE-2.0.txt).
+
+[Apache Software License (ASL) FAQ](https://www.apache.org/foundation/license-faq.html#WhatDoesItMEAN)
