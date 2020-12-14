@@ -92,23 +92,20 @@ Make a note of `Service credentails` in a text file. These will be needed in lat
 
    ***Set the environment***
 
-    ```
     $ cd news-api-service
     $ cp .env.sample .env
-    ```
+   
    Update the environment file(.env) with appropriate values.
 
    ***Deploy service***
 
    Navigate to the directory `news-api-service`.
 
-   ```
     $ cd news-api-service
     $ ibmcloud cf push <your-app-name>
 
     ## Get your application URL
     $ ibmcloud cf apps
-   ```
 
    Make a note of this News API Service application URL. This is needed in below steps.
 
@@ -117,10 +114,8 @@ Make a note of `Service credentails` in a text file. These will be needed in lat
 
    ***Set the environment***
     
-    ```
     $ cd user-management-service
     $ cp .env.sample .env
-    ```
     
    Update the environment file(.env) with appropriate values.
 
@@ -128,13 +123,11 @@ Make a note of `Service credentails` in a text file. These will be needed in lat
 
    Navigate to the directory `user-management-service`.
 
-   ```
     $ cd user-management-service
     $ ibmcloud cf push <your-app-name>
 
     ## Get your application URL
     $ ibmcloud cf apps
-   ```
 
    Make a note of this User Management Service application URL. This is needed in below steps.
 
@@ -142,10 +135,8 @@ Make a note of `Service credentails` in a text file. These will be needed in lat
 
    ***Set the environment***
 
-    ```
     $ cd front-end-service
     $ cp .env.sample .env
-    ```
     
    Update the environment file(.env) with appropriate values of App ID credentials and URL of previously deployed services.
 
@@ -153,13 +144,11 @@ Make a note of `Service credentails` in a text file. These will be needed in lat
 
    Navigate to the directory `front-end-service`.
 
-   ```
     $ cd front-end-service
     $ ibmcloud cf push <your-app-name>
 
     ## Get your application URL
     $ ibmcloud cf apps
-   ```
     
    Make a note of this Front End Service application URL. This is needed in next step.
    
@@ -172,7 +161,7 @@ Make a note of `Service credentails` in a text file. These will be needed in lat
    ```
    https://<your-front-end-service-application-url>/callback
    ```
-
+   
    Now you are all set to access your application.
 
 
@@ -187,10 +176,8 @@ Make a note of `Service credentails` in a text file. These will be needed in lat
 
    ***Set the environment***
 
-    ```
     $ cd news-api-service
     $ cp .env.sample .env
-    ```
     
    Update the environment file(.env) with appropriate values.
 
@@ -198,7 +185,6 @@ Make a note of `Service credentails` in a text file. These will be needed in lat
 
    Navigate to the directory `news-api-service`.
 
-    ```
     $ cd news-api-service
     $ oc new-app --name=<your-app-name> .
     $ oc start-build <your-app-name> --from-dir=.
@@ -211,7 +197,6 @@ Make a note of `Service credentails` in a text file. These will be needed in lat
     
     $ oc expose svc/<your-app-name>
     $ oc get routes <your-app-name>  ## copy full route for next step
-    ```
     
    Make a note of this News API Service application URL. This is needed in below steps.
 
@@ -219,10 +204,8 @@ Make a note of `Service credentails` in a text file. These will be needed in lat
 
    ***Set the environment***
 
-    ```
     $ cd user-management-service
     $ cp .env.sample .env
-    ```
     
    Update the environment file(.env) with appropriate values.
 
@@ -230,7 +213,6 @@ Make a note of `Service credentails` in a text file. These will be needed in lat
 
    Navigate to the directory `user-management-service`.
 
-    ```
     $ cd user-management-service
     $ oc new-app --name=<your-app-name> .
     $ oc start-build <your-app-name> --from-dir=.
@@ -243,7 +225,6 @@ Make a note of `Service credentails` in a text file. These will be needed in lat
     
     $ oc expose svc/<your-app-name>
     $ oc get routes <your-app-name>  ## copy full route for next step
-    ```
 
    Make a note of this User Management Service application URL. This is needed in below steps.
 
@@ -251,10 +232,8 @@ Make a note of `Service credentails` in a text file. These will be needed in lat
 
    ***Set the environment***
 
-    ```
     $ cd front-end-service
     $ cp .env.sample .env
-    ```
     
    Update the environment file(.env) with appropriate values.
 
@@ -262,7 +241,6 @@ Make a note of `Service credentails` in a text file. These will be needed in lat
 
    Navigate to the directory `front-end-service`.
 
-    ```
     $ cd front-end-service
     $ oc new-app --name=<your-app-name> .
     $ oc start-build <your-app-name> --from-dir=.
@@ -278,7 +256,6 @@ Make a note of `Service credentails` in a text file. These will be needed in lat
     
     # this route will be used by AppID for callback URL, so lets update deployment config before accessing the application
     $ oc set env dc/<your-app-name> APPLICATION_URL=http://<your-application-route>
-    ```
 
    ***Update Callback URL in APP ID***
 
