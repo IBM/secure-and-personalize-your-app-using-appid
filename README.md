@@ -64,7 +64,7 @@ Click on `Catalog` in top menu bar. Under `IBM Cloud products` search for `App I
 
 Select `Lite` plan, if not already selected, then click `Create` to create an instance of App ID. When App ID instance is created, make a note of service credentials. If service credentials are not available by default, you can create new credentials as shown in below image.
 
-![image-20201211165207271](/Users/murali/Documents/Murali/Work/01Code Patterns/1Projects/2020/15AppID/Git Repo/images/image-20201211165207271.png)
+![image-20201211165207271](../images/image-20201211165207271.png)
 
 Make a note of `Service credentails` in a text file. These will be needed in later steps.
 
