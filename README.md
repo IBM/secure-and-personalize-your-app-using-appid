@@ -40,11 +40,8 @@ Please follow the below to setup and run this code pattern.
 1. [Get the code](#1-get-the-code)
 2. [Create IBM Cloud Services](#2-create-ibm-cloud-services)
 3. [Deploy Application](#3-deploy-application)
-
 3.1. [Deploy on Cloud Foundry (on IBM Cloud)](#3.1-deploy-on-cloud-foundry-(-on-ibm-cloud-)-)
-
 3.2. [Deploy on OpenShift (on IBM Cloud)](#3.2-deploy-on-openshift-(-on-ibm-cloud-)-)
-
 4. [Access your application and analyze the results](#4-access-your-application-and-analyze-the-results)
 
 ### 1. Get the code
@@ -88,7 +85,7 @@ Make a note of `Service credentails` in a text file. These will be needed in lat
   Login to IBM Cloud using the following command.
 
   ```
-  ibmcloud login [--sso]
+ibmcloud login [--sso]
   ```
 
    #### 3.1.1 Deploy news API service
