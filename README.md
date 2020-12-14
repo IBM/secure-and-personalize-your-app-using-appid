@@ -27,19 +27,25 @@ When the reader has completed this Code Pattern, they will understand how to:
 6. User can update his preferences (if required) and then application shows personalized news accordingly.
 
 ## Pre-requisites
+
 * [IBM Cloud account](https://www.ibm.com/cloud/): Create an IBM Cloud account.
+* [Install ibmcloud CLI](https://cloud.ibm.com/docs/cli?topic=cli-install-ibmcloud-cli)
 * [OpenShift Cluster](https://docs.openshift.com): You should have one OpenShift cluster, if you want to deploy your application on OpenShift.
+* [Install oc CLI](https://cloud.ibm.com/docs/openshift?topic=openshift-openshift-cli#cli_oc)
 
 # Steps
 
 Please follow the below to setup and run this code pattern.
 
 1. [Get the code](#1-get-the-code)
-2. [Create IBM Cloud Services]
-3. [Deploy Application]
-3.1 [Deploy on Cloud Foundry (IBM Cloud)]
+2. [Create IBM Cloud Services](#2-create-ibm-cloud-services)
+3. [Deploy Application](#3-deploy-application)
+
+3.1 [Deploy on Cloud Foundry (IBM Cloud)](#3-1-deploy-on-cloud-foundry-ibm-cloud)
+
 3.2 [Deploy on OpenShift]
-4. [Access your application and analyze the results]
+
+4. [Access your application and analyze the results](#4-access-your-application-and-analyze-the-results)
 
 ### 1. Get the code
 
@@ -79,6 +85,12 @@ Make a note of `Service credentails` in a text file. These will be needed in lat
 
   ### 3.1 Deploy on Cloud Foundry (on IBM Cloud)
 
+  Login to IBM Cloud using the following command.
+  
+  ```
+  ibmcloud login [--sso]
+  ```
+  
    #### 3.1.1 Deploy news API service
 
    ***Set the environment***
