@@ -86,18 +86,18 @@ Make a note of `Service credentails` in a text file. These will be needed in lat
   ### 3.1 Deploy on Cloud Foundry (on IBM Cloud)
 
   Login to IBM Cloud using the following command.
-  
+
   ```
   ibmcloud login [--sso]
   ```
-  
+
    #### 3.1.1 Deploy news API service
 
    ***Set the environment***
 
     $ cd news-api-service
     $ cp .env.sample .env
-   
+
    Update the environment file(.env) with appropriate values.
 
    ***Deploy service***
@@ -106,11 +106,16 @@ Make a note of `Service credentails` in a text file. These will be needed in lat
 
     $ cd news-api-service
     $ ibmcloud cf push <your-app-name>
-
+    
     ## Get your application URL
     $ ibmcloud cf apps
 
-   Make a note of this News API Service application URL. This is needed in below steps.
+There are two API endpoints at this application url. 
+
+- Generic News: <application url>/generic-news
+- Personalized News: <application url>/personalized-news
+
+Make a note of this application URL and the end points. These are needed in below steps.
 
 
    #### 3.1.2 Deploy user management service
@@ -119,7 +124,7 @@ Make a note of `Service credentails` in a text file. These will be needed in lat
     
     $ cd user-management-service
     $ cp .env.sample .env
-    
+
    Update the environment file(.env) with appropriate values.
 
    ***Deploy service***
@@ -128,7 +133,7 @@ Make a note of `Service credentails` in a text file. These will be needed in lat
 
     $ cd user-management-service
     $ ibmcloud cf push <your-app-name>
-
+    
     ## Get your application URL
     $ ibmcloud cf apps
 
@@ -140,7 +145,7 @@ Make a note of `Service credentails` in a text file. These will be needed in lat
 
     $ cd front-end-service
     $ cp .env.sample .env
-    
+
    Update the environment file(.env) with appropriate values of App ID credentials and URL of previously deployed services.
 
    ***Deploy service***
@@ -149,14 +154,14 @@ Make a note of `Service credentails` in a text file. These will be needed in lat
 
     $ cd front-end-service
     $ ibmcloud cf push <your-app-name>
-
+    
     ## Get your application URL
     $ ibmcloud cf apps
-    
+
    Make a note of this Front End Service application URL. This is needed in next step.
-   
+
    ***Update Callback URL in APP ID***
-   
+
    Go to `IBM Cloud dashboard -> Services -> <your AppID service> -> Manage Authentication`.
 
    Select `Authentication Settings` and in `Add web redirect URLs` section, add the following URL.
@@ -164,7 +169,7 @@ Make a note of `Service credentails` in a text file. These will be needed in lat
    ```
    https://<your-front-end-service-application-url>/callback
    ```
-   
+
    Now you are all set to access your application.
 
 
@@ -181,7 +186,7 @@ Make a note of `Service credentails` in a text file. These will be needed in lat
 
     $ cd news-api-service
     $ cp .env.sample .env
-    
+
    Update the environment file(.env) with appropriate values.
 
    ***Deploy service***
@@ -200,7 +205,7 @@ Make a note of `Service credentails` in a text file. These will be needed in lat
     
     $ oc expose svc/<your-app-name>
     $ oc get routes <your-app-name>  ## copy full route for next step
-    
+
    Make a note of this News API Service application URL. This is needed in below steps.
 
    #### 3.2.2 Deploy user management service
@@ -209,7 +214,7 @@ Make a note of `Service credentails` in a text file. These will be needed in lat
 
     $ cd user-management-service
     $ cp .env.sample .env
-    
+
    Update the environment file(.env) with appropriate values.
 
    ***Deploy service***
@@ -237,7 +242,7 @@ Make a note of `Service credentails` in a text file. These will be needed in lat
 
     $ cd front-end-service
     $ cp .env.sample .env
-    
+
    Update the environment file(.env) with appropriate values with appropriate values of App ID credentials and URL of previously deployed services.
 
    ***Deploy service***
@@ -259,9 +264,9 @@ Make a note of `Service credentails` in a text file. These will be needed in lat
     
     # this route will be used by AppID for callback URL, so lets update deployment config before accessing the application
     $ oc set env dc/<your-app-name> APPLICATION_URL=http://<your-application-route>
-    
+
    Make a note of this Front End Service application URL. This is needed in next step.
-   
+
    ***Update Callback URL in APP ID***
 
    Go to `IBM Cloud dashboard -> Services -> <your AppID service> -> Manage Authentication`. Select `Authentication Settings` and in `Add web redirect URLs` section, add the following URL.
