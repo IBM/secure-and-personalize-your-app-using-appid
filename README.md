@@ -40,8 +40,11 @@ Please follow the below to setup and run this code pattern.
 1. [Get the code](#1-get-the-code)
 2. [Create IBM Cloud Services](#2-create-ibm-cloud-services)
 3. [Deploy Application](#3-deploy-application)
-3.1 [Deploy on Cloud Foundry (on IBM Cloud)](#3-1-deploy-on-cloud-foundry-on-ibm-cloud)
-3.2 [Deploy on OpenShift (on IBM Cloud)](#3-2-deploy-on-openshift-on-ibm-cloud)
+
+3.1. [Deploy on Cloud Foundry (on IBM Cloud)](#3.1-deploy-on-cloud-foundry-(-on-ibm-cloud-)-)
+
+3.2. [Deploy on OpenShift (on IBM Cloud)](#3.2-deploy-on-openshift-(-on-ibm-cloud-)-)
+
 4. [Access your application and analyze the results](#4-access-your-application-and-analyze-the-results)
 
 ### 1. Get the code
@@ -235,7 +238,7 @@ Make a note of `Service credentails` in a text file. These will be needed in lat
     $ cd front-end-service
     $ cp .env.sample .env
     
-   Update the environment file(.env) with appropriate values.
+   Update the environment file(.env) with appropriate values with appropriate values of App ID credentials and URL of previously deployed services.
 
    ***Deploy service***
 
@@ -256,7 +259,9 @@ Make a note of `Service credentails` in a text file. These will be needed in lat
     
     # this route will be used by AppID for callback URL, so lets update deployment config before accessing the application
     $ oc set env dc/<your-app-name> APPLICATION_URL=http://<your-application-route>
-
+    
+   Make a note of this Front End Service application URL. This is needed in next step.
+   
    ***Update Callback URL in APP ID***
 
    Go to `IBM Cloud dashboard -> Services -> <your AppID service> -> Manage Authentication`. Select `Authentication Settings` and in `Add web redirect URLs` section, add the following URL.
@@ -272,6 +277,7 @@ Make a note of `Service credentails` in a text file. These will be needed in lat
 
 Access your front end service URL on any browser. You can explore the application as shown here.
 
+[]
 
 In this application, 
 * News API service returns top 10 finance news of the last one week. This configuration can be changed at Discovery service.
