@@ -29,7 +29,7 @@ When the reader has completed this Code Pattern, they will understand how to:
 
 ## Pre-requisites
 
-* [IBM Cloud account](https://www.ibm.com/cloud/): Create an IBM Cloud account.
+* [IBM Cloud account](http://cloud.ibm.com/): Create an IBM Cloud account.
 * [Install ibmcloud CLI](https://cloud.ibm.com/docs/cli?topic=cli-install-ibmcloud-cli)
 * [OpenShift Cluster](https://docs.openshift.com): You should have one OpenShift cluster, if you want to deploy your application on OpenShift.
 * [Install oc CLI](https://cloud.ibm.com/docs/openshift?topic=openshift-openshift-cli#cli_oc)
@@ -41,8 +41,8 @@ Please follow the below to setup and run this code pattern.
  1. [Get the code](#1-get-the-code)  
  2. [Create IBM Cloud Services](#2-create-ibm-cloud-services)  
  3. [Deploy Application](#3-deploy-application)  
-    3.1 [Deploy on Cloud Foundry](#3.1-deploy-on-cloud-foundry)  
-    3.2 [Deploy on OpenShift](#3.2-deploy-on-openshift)  
+    3.1 [Deploy on Cloud Foundry](#31-deploy-on-cloud-foundry)  
+    3.2 [Deploy on OpenShift](#32-deploy-on-openshift)
  4. [Access your application and analyze the results](#4-access-your-application-and-analyze-the-results)  
 
 ### 1. Get the code
