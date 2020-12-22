@@ -27,10 +27,9 @@ When the reader has completed this Code Pattern, they will understand how to:
 4. User preferences are then set by invoking the `User management` service
 5. The `User management` service sets the user profile on App ID  
 6. After sign-in, the `Front-End` service invokes the `News` service for finance news 
-7. The `News` service retrieves the user's profile and preferences by invoking `User management` service
-8. The `User management` service retrieves the user profile from App ID and sends it to the `News` service
-9. The `News` service returns personalized news based on the user's profile
-10. User can update his preferences (if required) and then application shows personalized news accordingly.
+7. The `News` service retrieves the user's profile and preferences from App ID
+8. The `News` service returns personalized news based on the user's profile
+9. User can update his preferences (if required) and then application shows personalized news accordingly.
 
 ## Pre-requisites
 
