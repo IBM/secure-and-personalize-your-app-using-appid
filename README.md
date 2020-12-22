@@ -179,7 +179,7 @@ Make a note of this `News` Service URL. This will be used in later steps.
   oc login --token=xxxx --server=https://xxxx.containers.cloud.ibm.com:xxx
   ```
 
-   #### 3.2.1 Deploy news API service
+   #### 3.2.1 Deploy News service
 
    ***Set the environment***
 
