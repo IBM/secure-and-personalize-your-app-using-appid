@@ -54,7 +54,7 @@ Please follow the below to setup and run this code pattern.
 Clone the repository using the below command.
 
 ```
-git clone https://github.com/IBM/k8-secrets-as-hyperledger-fabric-wallet.git
+git clone https://github.com/IBM/secure-and-personalize-your-app-using-appid.git
 ```
 
 ### 2. Create IBM Cloud Services
