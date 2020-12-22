@@ -93,7 +93,7 @@ Make a note of `Service credentails` in a text file. These will be needed in lat
 ibmcloud login [--sso]
   ```
 
-   #### 3.1.1 Deploy news API service
+   #### 3.1.1 Deploy News service
 
    ***Set the environment***
 
@@ -112,7 +112,7 @@ ibmcloud login [--sso]
     ## Get your application URL
     $ ibmcloud cf apps
 
-Make a note of this News API Service URL. This will be used in later steps.
+Make a note of this `News` Service URL. This will be used in later steps.
 
 
    #### 3.1.2 Deploy user management service
