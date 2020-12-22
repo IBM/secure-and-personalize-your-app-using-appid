@@ -20,12 +20,15 @@ When the reader has completed this Code Pattern, they will understand how to:
 
 ![arch](images/architecture.png)
 
-1. User accesses the client webapp interface (front end service).
-2. The front end service fetches the finance news from News API service and loads on the landing page of webapp.
-3. User needs to login to get personalized news.
-4. User does social sign-in powered by AppId and set his preferences.
-5. After sign-in, front end service fetches the finance news based on user's profile and preferences and shows personalized news.
-6. User can update his preferences (if required) and then application shows personalized news accordingly.
+1. User accesses the `App UI` rendered by the `Front-End` service
+2. The `App UI` sends the request to the `Front-End` service
+2. The `Front-End` service fetches the finance news from `News` service that is displayed on the `App UI`
+3. User logins to the portal using social sign-in powered by App ID
+4. User preferences are then set by invoking the `User management` service
+5. After sign-in, the `Front-End` service invokes the `News` service for finance news 
+6. The `News` service retrieves the user's profile and preferences bu invoking `User management` service
+7. The `News` service returns personalized news based on the user's profile
+8. User can update his preferences (if required) and then application shows personalized news accordingly.
 
 ## Pre-requisites
 
