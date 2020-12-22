@@ -22,13 +22,13 @@ When the reader has completed this Code Pattern, they will understand how to:
 
 1. User accesses the `App UI` rendered by the `Front-End` service
 2. The `App UI` sends the request to the `Front-End` service
-2. The `Front-End` service fetches the finance news from `News` service that is displayed on the `App UI`
+2. The `Front-End` service fetches the finance news from `News` service. The `News` service sources the news from `Watson Discovery News` which is displayed on the `App UI`
 3. User logins to the portal using social sign-in powered by App ID
 4. User preferences are then set by invoking the `User management` service
 5. The `User management` service sets the user profile on App ID  
 6. After sign-in, the `Front-End` service invokes the `News` service for finance news 
 7. The `News` service retrieves the user's profile and preferences from App ID
-8. The `News` service returns personalized news based on the user's profile
+8. The `News` service returns personalized news sourced from `Watson Discovery News` based on the user's profile
 9. User can update his preferences (if required) and then application shows personalized news accordingly.
 
 ## Pre-requisites
