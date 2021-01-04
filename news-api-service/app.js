@@ -1,4 +1,5 @@
 require('dotenv').config();
+var request = require('request');
 var bodyParser = require('body-parser');
 queryBuilder = require("./query-builder");
 samples = require("./samples");
@@ -48,20 +49,28 @@ app.get("/generic-news", async function (req, res) {
 	res.json(transformResponse(queryResponse));
 });
 
-app.get("/personalized-news", passport.authenticate(APIStrategy.STRATEGY_NAME, { session: false }), function (req, res) {
+app.get("/personalized-news", passport.authenticate(APIStrategy.STRATEGY_NAME, { session: false }), async function (req, res) {
 
 	var accessToken = req.headers['authorization'].split(' ')[1];
-
 	if (accessToken) {
-		userProfileManager.getAllAttributes(accessToken).then(async function (attributes) {
-			console.log("\nAttributes from App ID = " + JSON.stringify(attributes));
+		var options = {
+			method: 'GET',
+			url: process.env.USER_MGMT_SERVICE_URL,
+			headers: {
+				'Authorization': 'Bearer ' + accessToken,
+				'Content-Type': 'application/json'
+			}
+		};
 
+		request.get(options, async function (error, response, body) {
+			if (error) throw new Error(error);
+			attributes = response.body;
+			console.log("Attributes - ");
+			console.log(attributes);
 			var query = await queryBuilder.getQuery(attributes);
 			console.log("\nCustomized query = " + JSON.stringify(query));
 			var queryResponse = await invokeDiscovery(query);
 			res.json(transformResponse(queryResponse));
-		}).catch(function (error) {
-			console.log("\nError getting custom attributes = " + error);
 		});
 	} else {
 		res.sendStatus(403);
