@@ -44,7 +44,7 @@ Please follow the below to setup and run this code pattern.
 
  1. [Get the code](#1-get-the-code)  
  2. [Create IBM Cloud Services](#2-create-ibm-cloud-services) 
- 3. [Configure AppID](#3-configure-appid)
+ 3. [Configure App ID](#3-configure-app-id)
  4. [Deploy Application](#4-deploy-application)  
     4.1 [Deploy on Cloud Foundry](#41-deploy-on-cloud-foundry)  
     4.2 [Deploy on OpenShift](#42-deploy-on-openshift)
@@ -84,9 +84,9 @@ Select `Lite` plan, if not already selected, then click `Create` to create an in
 
 Make a note of `Service credentials` in a text file. These will be needed in later steps.
 
-### 3. Configure AppID
+### 3. Configure App ID
 
-Access the AppID service instance using IBM Cloud dashboard. Select `Manage Authentication` in left panel menu. It shows the list of `Identity Providers`. We are using social sign-in using Facebook and Google only in this code pattern, hence disable other identity providers except Facebook and Google. The changes will get saved automatically.
+Access the App ID service instance using IBM Cloud dashboard. Select `Manage Authentication` in left panel menu. It shows the list of `Identity Providers`. We are using social sign-in using Facebook and Google only in this code pattern, hence disable other identity providers except Facebook and Google. The changes will get saved automatically.
 
 Next, go to `Login Customization` in left panel menu. Using this you can customize your login page.
 
