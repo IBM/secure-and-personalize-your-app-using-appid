@@ -43,11 +43,12 @@ When the reader has completed this Code Pattern, they will understand how to:
 Please follow the below to setup and run this code pattern.
 
  1. [Get the code](#1-get-the-code)  
- 2. [Create IBM Cloud Services](#2-create-ibm-cloud-services)  
- 3. [Deploy Application](#3-deploy-application)  
-    3.1 [Deploy on Cloud Foundry](#31-deploy-on-cloud-foundry)  
-    3.2 [Deploy on OpenShift](#32-deploy-on-openshift)
- 4. [Access your application and analyze the results](#4-access-your-application-and-analyze-the-results)  
+ 2. [Create IBM Cloud Services](#2-create-ibm-cloud-services) 
+ 3. [Configure AppID](#3-configure-appid)
+ 4. [Deploy Application](#4-deploy-application)  
+    4.1 [Deploy on Cloud Foundry](#41-deploy-on-cloud-foundry)  
+    4.2 [Deploy on OpenShift](#42-deploy-on-openshift)
+ 5. [Access your application and analyze the results](#5-access-your-application-and-analyze-the-results)  
 
 ### 1. Get the code
 
@@ -77,15 +78,30 @@ Login to [IBM Cloud](https://cloud.ibm.com) .
 
 Click on `Catalog` in top menu bar. Under `IBM Cloud products` search for `App ID`. Click on `App ID` tile that gets listed.
 
-Select `Lite` plan, if not already selected, then click `Create` to create an instance of App ID. When App ID instance is created, make a note of service credentials. If service credentials are not available by default, you can create new credentials as shown in below image.
+Select `Lite` plan, if not already selected, then click `Create` to create an instance of App ID. When App ID instance is created, make a note of service credentials. If service credentials are not available by default, you can create new credentials as shown.
 
 ![image-20201211165207271](./images/appid-credentials.png)
 
-Make a note of `Service credentails` in a text file. These will be needed in later steps.
+Make a note of `Service credentials` in a text file. These will be needed in later steps.
 
-### 3. Deploy Application
+### 3. Configure AppID
 
-  ### 3.1 Deploy on Cloud Foundry
+Access the AppID service instance using IBM Cloud dashboard. Select `Manage Authentication` in left panel menu. It shows the list of `Identity Providers`. We are using social sign-in using Facebook and Google only in this code pattern, hence disable other identity providers except Facebook and Google. The changes will get saved automatically.
+
+Next, go to `Login Customization` in left panel menu. Using this you can customize your login page.
+
+***Upload Logo***. You can choose any image of your choice as a logo of your login page. In this code pattern, App ID logo itself is being used and provided for your ease in `images` folder of the repository.
+
+***Header Color***. You can choose any color for the header or provide hex code of the color directly. For example, give hex color code as #181818 for black color header.
+
+***Tab Name***. You can add any name as tab name of your choice.
+
+Once done, click on `Save Changes`.
+
+
+### 4. Deploy Application
+
+  ### 4.1 Deploy on Cloud Foundry
 
   Login to IBM Cloud using the following command.
 
@@ -93,7 +109,7 @@ Make a note of `Service credentails` in a text file. These will be needed in lat
 ibmcloud login [--sso]
   ```
 
-   #### 3.1.1 Deploy News service
+   #### 4.1.1 Deploy News service
 
    ***Set the environment***
 
@@ -115,7 +131,7 @@ ibmcloud login [--sso]
 Make a note of this `News` Service URL. This will be used in later steps.
 
 
-   #### 3.1.2 Deploy user management service
+   #### 4.1.2 Deploy user management service
 
    ***Set the environment***
     
@@ -136,7 +152,7 @@ Make a note of this `News` Service URL. This will be used in later steps.
 
    Make a note of this User Management Service application URL. This is needed in below steps.
 
-   #### 3.1.3 Deploy front-end service
+   #### 4.1.3 Deploy front-end service
 
    ***Set the environment***
 
@@ -172,14 +188,14 @@ Make a note of this `News` Service URL. This will be used in later steps.
    Now you are all set to access your application.
 
 
-  ### 3.2 Deploy on OpenShift
+  ### 4.2 Deploy on OpenShift
 
    Login to OpenShift. From the IBM Cloud console go to `Clusters > Your OpenShift Cluster > OpenShift web console`. From the OpenShift web console click the menu in the upper right corner (the label contains your email address), and select Copy Login Command. Click on Display token and paste the command into a terminal session. For example:
   ```
   oc login --token=xxxx --server=https://xxxx.containers.cloud.ibm.com:xxx
   ```
 
-   #### 3.2.1 Deploy News service
+   #### 4.2.1 Deploy News service
 
    ***Set the environment***
 
@@ -207,7 +223,7 @@ Make a note of this `News` Service URL. This will be used in later steps.
 
    Make a note of this News API Service application URL. This is needed in below steps.
 
-   #### 3.2.2 Deploy user management service
+   #### 4.2.2 Deploy user management service
 
    ***Set the environment***
 
@@ -235,7 +251,7 @@ Make a note of this `News` Service URL. This will be used in later steps.
 
    Make a note of this User Management Service application URL. This is needed in below steps.
 
-   #### 3.2.3 Deploy front-end service
+   #### 4.2.3 Deploy front-end service
 
    ***Set the environment***
 
@@ -282,7 +298,7 @@ Make a note of this `News` Service URL. This will be used in later steps.
 
 > Note: Hybrid mode of deployment (some services on Cloud foundry and some on OpenShift) is also possible. You can choose the deployment strategy as per your requirement. 
 
-### 4. Access your application and analyze the results
+### 5. Access your application and analyze the results
 
 Access your front end service URL on any browser. You can explore the application as shown here.
 
