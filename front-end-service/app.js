@@ -5,13 +5,20 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var request = require('request');
-//var cfenv = require("cfenv");
+var cfenv = require("cfenv");
 var app = express();
 
 // get the app environment from Cloud Foundry
-//var appEnv = cfenv.getAppEnv();
-//console.log("Application URL: ", appEnv.url);
-//var appURL = appEnv.url;
+var APPLICATION_URL = process.env.APPLICATION_URL;
+var appEnv = cfenv.getAppEnv();
+if (appEnv.isLocal) {
+  console.log("Application is not running in Cloud Foundry, hence reading APPLICATION URL from the environment.");
+  APPLICATION_URL = process.env.APPLICATION_URL;
+} else {
+  console.log("Application is running in Cloud Foundry environment.");
+  console.log("APPLICATION URL: ", appEnv.url);
+  APPLICATION_URL = appEnv.url;
+}
 
 //appid
 const session = require('express-session');							// https://www.npmjs.com/package/express-session
@@ -25,12 +32,12 @@ app.use(session({
 }));
 
 const config = {
-	tenantId: process.env.tenantId,
-	clientId: process.env.clientId,
-	secret: process.env.secret,
-	oauthServerUrl: process.env.oauthServerUrl,
-  redirectUri: process.env.APPLICATION_URL + process.env.CALLBACK_URL,
-  profilesURL: process.env.profilesURL
+	tenantId: process.env.TENANT_ID,
+	clientId: process.env.CLIENT_ID,
+	secret: process.env.SECRET,
+	oauthServerUrl: process.env.OAUTH_SERVER_URL,
+  redirectUri: APPLICATION_URL + process.env.CALLBACK_URL,
+  profilesURL: process.env.PROFILES_URL
 }
 
 app.use(passport.initialize());
