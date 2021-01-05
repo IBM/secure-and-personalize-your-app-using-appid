@@ -6,21 +6,21 @@ function getCategories(attributes) {
     if (attributes && attributes.categories) {
         categories = attributes.categories;
         if (categories) {
-            cat_array = categories.split(",");
-            cat_array.forEach(function (item) {
+            for(item in categories){
+                console.log("Item = " + categories[item]);
                 if (categoriesQueryString.length == 0) {
                     categoriesQueryString = "("
                 } else {
                     categoriesQueryString = categoriesQueryString + "|"
                 }
-                categoriesQueryString = categoriesQueryString + "enriched_text.concepts.text:'" + item + "'";
-            });
-
+                categoriesQueryString = categoriesQueryString + "enriched_text.concepts.text:'" + categories[item] + "'";
+            }
         }
     }
     if (categoriesQueryString.length > 0) {
         categoriesQueryString = categoriesQueryString + ")";
     }
+    console.log("categoriesQueryString = " + categoriesQueryString);
     return categoriesQueryString;
 }
 
@@ -31,15 +31,15 @@ function getSources(attributes) {
     if (attributes.sources) {
         sources = attributes.sources
         if (sources) {
-            sources_array = sources.split(",");
-            sources_array.forEach(function (item) {
+            for(item in sources){
+                console.log("Item = " + sources[item]);
                 if (sourcesQueryString.length == 0) {
                     sourcesQueryString = "("
                 } else {
                     sourcesQueryString = sourcesQueryString + "|"
                 }
-                sourcesQueryString = sourcesQueryString + "host:'" + item + "'";
-            });
+                sourcesQueryString = sourcesQueryString + "host:'" + sources[item] + "'";
+            }
         }
     }
     if (sourcesQueryString.length > 0) {

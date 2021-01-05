@@ -51,10 +51,7 @@ app.get("/personalized-news", async function (req, res) {
 
 		request.get(options, async function (error, response, body) {
 			if (error) throw new Error(error);
-			attributes = response.body;
-			console.log("Attributes - ");
-			console.log(attributes);
-			var query = await queryBuilder.getQuery(attributes);
+			var query = await queryBuilder.getQuery(JSON.parse(body));
 			console.log("\nCustomized query = " + JSON.stringify(query));
 			var queryResponse = await invokeDiscovery(query);
 			res.json(transformResponse(queryResponse));
