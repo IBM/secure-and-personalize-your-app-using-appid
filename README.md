@@ -62,9 +62,9 @@ git clone https://github.com/IBM/secure-and-personalize-your-app-using-appid.git
 
 #### 2.1 Create Discovery Service
 
-You can create the service by either using the IBM Cloud console or the IBM Cloud CLI.
+You can create the service by either using the IBM Cloud console(Section 2.11) or the IBM Cloud CLI(Section 2.12).
 
-**Using IBM Cloud Console**
+##### 2.11 Create from the IBM Cloud Console
 
 Login to [IBM Cloud](https://cloud.ibm.com) . 
 
@@ -74,7 +74,7 @@ Select `Lite` plan, if not already selected, then click `Create` to create an in
 
 ![image-20201210155703629](./images/image-20201210155703629.png)
 
-**Using IBM Cloud CLI**
+##### 2.12 Create using IBM Cloud CLI
 
 Skip this section if you already created the `Discovery` service from IBM Cloud console as described in the previous section. 
 
@@ -113,9 +113,9 @@ Credentials:
 
 #### 2.2 Create App ID service instance
 
-You can create the service by either using the IBM Cloud console or the IBM Cloud CLI.
+You can create the service by either using the IBM Cloud console(Section 2.21) or the IBM Cloud CLI(Section 2.22).
 
-**Using IBM Cloud Console**
+##### 2.21 Create from the IBM Cloud Console**
 
 Login to [IBM Cloud](https://cloud.ibm.com). 
 
@@ -127,7 +127,7 @@ Select `Lite` plan, if not already selected, then click `Create` to create an in
 
 Store `Service credentials` in a text file. Please make a note of the `tenantId`, `secret` `profilesUrl`, `oauthServerUrl` and `clientId`. This will be required later to configure the application.
 
-**Using IBM Cloud CLI**
+##### 2.22 Create using IBM Cloud CLI
 
 Skip this section if you already created the `App ID` service from IBM Cloud console as described in the previous section. 
 
