@@ -64,7 +64,7 @@ git clone https://github.com/IBM/secure-and-personalize-your-app-using-appid.git
 
 You can create the service by either using the IBM Cloud console or the IBM Cloud CLI.
 
-** Using IBM Cloud Console
+**Using IBM Cloud Console**
 
 Login to [IBM Cloud](https://cloud.ibm.com) . 
 
@@ -74,7 +74,7 @@ Select `Lite` plan, if not already selected, then click `Create` to create an in
 
 ![image-20201210155703629](./images/image-20201210155703629.png)
 
-** Using IBM Cloud CLI
+**Using IBM Cloud CLI**
 
 Skip this section if you already created the `Discovery` service from IBM Cloud console as described in the previous section. 
 
