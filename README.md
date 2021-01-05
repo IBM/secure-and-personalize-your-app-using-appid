@@ -22,14 +22,14 @@ When the reader has completed this Code Pattern, they will understand how to:
 
 1. User accesses the `App UI` rendered by the `Front-End` service
 2. The `App UI` sends the request to the `Front-End` service
-2. The `Front-End` service fetches the finance news from `News` service. The `News` service sources the news from `Watson Discovery News` which is displayed on the `App UI`
-3. User logins to the portal through the `Front-end` service using social sign-in powered by App ID
-4. User sets preferences through the `Front-end` service which invokes the `User management` service with the preferences
-5. The `User management` service then sets the user profile on App ID  
-6. After sign-in, the `Front-End` service invokes the `News` service for finance news 
-7. The `News` service retrieves the user's profile and preferences from App ID
-8. The `News` service returns personalized news sourced from `Watson Discovery News` based on the user's profile
-9. User can update his preferences and then application shows personalized news based on the new preferences 
+3. The `Front-End` service fetches the finance news from `News` service. The `News` service sources the news from `Watson Discovery News` which is displayed on the `App UI`
+4. User logins to the portal through the `Front-end` service using social sign-in powered by App ID
+5. User sets preferences through the `Front-end` service which invokes the `User management` service with the preferences
+6. The `User management` service then sets the user profile on App ID  
+7. After sign-in, the `Front-End` service invokes the `News` service for finance news 
+8. The `News` service retrieves the user's profile and preferences 
+9. The `News` service returns personalized news sourced from `Watson Discovery News` based on the user's profile
+10. User can update his preferences and then application shows personalized news based on the new preferences 
 
 ## Pre-requisites
 
@@ -70,11 +70,13 @@ Login to [IBM Cloud](https://cloud.ibm.com) .
 
 Click on `Catalog` in top menu bar. Under `IBM Cloud products` search for `Discovery`. Click on `Discovery` tile that gets listed.
 
-Select `Lite` plan, if not already selected, then click `Create` to create an instance of Watson Discovery service. When Discovery instance is created in a minute or two, make a note of `Service credentails` in a text file. These will be needed in later steps.
+Select `Lite` plan, if not already selected, then click `Create` to create an instance of Watson Discovery service. When Discovery instance is created in a minute or two, store `Service credentials` in a text file. Please make a note of the `apikey` and `url`. This will be required later to configure the application.
 
 ![image-20201210155703629](./images/image-20201210155703629.png)
 
 ** Using IBM Cloud CLI
+
+Skip this section if you already created the `Discovery` service from IBM Cloud console as described in the previous section. 
 
 Run the below commands to create the `Discovery` service:
 
@@ -113,7 +115,7 @@ Credentials:
 
 You can create the service by either using the IBM Cloud console or the IBM Cloud CLI.
 
-** Using IBM Cloud Console
+**Using IBM Cloud Console**
 
 Login to [IBM Cloud](https://cloud.ibm.com). 
 
@@ -123,9 +125,11 @@ Select `Lite` plan, if not already selected, then click `Create` to create an in
 
 ![image-20201211165207271](./images/appid-credentials.png)
 
-Make a note of `Service credentials` in a text file. These will be needed in later steps.
+Store `Service credentials` in a text file. Please make a note of the `tenantId`, `secret` `profilesUrl`, `oauthServerUrl` and `clientId`. This will be required later to configure the application.
 
-** Using IBM Cloud CLI
+**Using IBM Cloud CLI**
+
+Skip this section if you already created the `App ID` service from IBM Cloud console as described in the previous section. 
 
 Run the below commands to create the `App ID` service:
 ```
@@ -140,7 +144,7 @@ ibmcloud resource service-key-create skey --instance-id [GUID of Discovery]
 ```
 > Note: Replace the placeholder for GUID noted earlier before running the command.
 
-The output from the command will contain the credentials as shown below. Please make a note of the `apikey` and `url`. This will be required later to configure the application.
+The output from the command will contain the credentials as shown below.  Please make a note of the `tenantId`, `secret` `profilesUrl`, `oauthServerUrl` and `clientId`. This will be required later to configure the application.
 
 ```
 Name:          skey   
@@ -164,7 +168,6 @@ Credentials:
               version:                  4      
 ```
 
-The output from the command will contain the credentials as shown below. Please make a note of the `tenantId`, `secret` `profilesUrl`, `oauthServerUrl` and `clientId`. This will be required later to configure the application.
 
 ### 3. Configure App ID
 
@@ -195,36 +198,20 @@ Once done, click on `Save Changes`.
     ibmcloud login [--sso]
   ```
 
-   #### 4.1.1 Deploy News service
-
-   ***Set the environment***
-
-    $ cd news-api-service
-    $ cp .env.sample .env
-
-   Update the environment file(.env) with appropriate values from the credentials data noted in `**Create Discovery Service**` section.
-
-   ***Deploy service***
-
-   Navigate to the directory `news-api-service`.
-
-    $ cd news-api-service
-    $ ibmcloud cf push <your-app-name>
-    
-    ## Get your application URL
-    $ ibmcloud cf apps
-
-Make a note of this `News` Service URL. This will be used in later steps.
-
-
-   #### 4.1.2 Deploy user management service
+ #### 4.1.1 Deploy user management service
 
    ***Set the environment***
     
     $ cd user-management-service
     $ cp .env.sample .env
 
-   Update the environment file(.env) with appropriate values.
+   Update the environment file(.env) with appropriate values that we noted earlier during creation of `App ID` and `Discovery` services.
+   
+   ```
+   OAUTH_SERVER_URL=https://us-east.appid.cloud.ibm.com/oauth/v4/3cxxxx73
+   TENANT_ID=3cxxxx73
+   PROFILES_URL=https://us-east.appid.cloud.ibm.com                                                    
+   ```
 
    ***Deploy service***
 
@@ -238,6 +225,37 @@ Make a note of this `News` Service URL. This will be used in later steps.
 
    Make a note of this User Management Service application URL. This is needed in below steps.
 
+   #### 4.1.2 Deploy News service
+
+   ***Set the environment***
+
+    $ cd news-api-service
+    $ cp .env.sample .env
+
+   Update the environment file(.env) with appropriate values from the credentials data noted during creation of `Discovery` service, and the `User management` service url.
+   
+   ```
+   DISCOVERY_IAM_URL=https://iam.bluemix.net/identity/token
+   DISCOVERY_IAM_APIKEY=WtxxxxtT
+   DISCOVERY_URL=https://api.us-east.discovery.watson.cloud.ibm.com/instances/2axxxx82
+   ENVIRONMENT_ID=system
+   COLLECTION_ID=news-en
+   DISCOVERY_API_VERSION=2019-02-28
+   USER_MGMT_SERVICE_URL=http://user-management-service-xxxx.mybluemix.net/user-preferences                                                                                                       
+   ```
+
+   ***Deploy service***
+
+   Navigate to the directory `news-api-service`.
+
+    $ cd news-api-service
+    $ ibmcloud cf push <your-app-name>
+    
+    ## Get your application URL
+    $ ibmcloud cf apps
+
+Make a note of this `News` Service URL. This will be used in later steps.
+
    #### 4.1.3 Deploy front-end service
 
    ***Set the environment***
@@ -245,7 +263,25 @@ Make a note of this `News` Service URL. This will be used in later steps.
     $ cd front-end-service
     $ cp .env.sample .env
 
-   Update the environment file(.env) with appropriate values of App ID credentials and URL of previously deployed services.
+   Update the environment file(.env) with appropriate values of App ID credentials, and URLs of `User management` and `News` services.
+   
+   ```
+   /APP ID callback URL
+CALLBACK_URL = "/callback"
+
+//Backend Services URL
+NEWS_SERVICE_URL = "http://news-service-xxxx.mybluemix.net/generic-news"
+PERSONALISED_NEWS_URL = "http://news-service-xxxx.mybluemix.net/personalized-news"
+USER_MGMT_SERVICE_URL = "http://user-management-service-xxxx.mybluemix.net/user-preferences"
+CHECK_USER_PREFERENCES_URL = "http://user-management-service-xxxx.mybluemix.net/is-user-preferences-set"
+
+//APP ID Credentials
+TENANT_ID = "3cxxxx73"
+CLIENT_ID = "65xxxx9d"
+SECRET = "OTxxxxYx"
+OAUTH_SERVER_URL = "https://us-east.appid.cloud.ibm.com/oauth/v4/3cxxxx73"
+PROFILES_URL = "https://us-east.appid.cloud.ibm.com"
+   ```
 
    ***Deploy service***
 
