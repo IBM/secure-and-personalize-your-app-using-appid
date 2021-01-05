@@ -7,22 +7,9 @@ samples = require("./samples");
 const port = process.env.PORT || 3002;
 
 const express = require('express');
-const passport = require('passport');
-const APIStrategy = require("ibmcloud-appid").APIStrategy;
 
 const app = express();
-app.use(passport.initialize());
 
-passport.use(new APIStrategy({
-	oauthServerUrl: process.env.OAUTH_SERVER_URL,
-	tenantId: process.env.TENANT_ID
-}));
-
-const userProfileManager = require("ibmcloud-appid").UserProfileManager;
-userProfileManager.init({
-	"oauthServerUrl": process.env.OAUTH_SERVER_URL,
-	"profilesUrl": process.env.PROFILES_URL
-});
 
 // Serve static resources
 app.use(express.static('./public'));
@@ -49,7 +36,7 @@ app.get("/generic-news", async function (req, res) {
 	res.json(transformResponse(queryResponse));
 });
 
-app.get("/personalized-news", passport.authenticate(APIStrategy.STRATEGY_NAME, { session: false }), async function (req, res) {
+app.get("/personalized-news", async function (req, res) {
 
 	var accessToken = req.headers['authorization'].split(' ')[1];
 	if (accessToken) {
