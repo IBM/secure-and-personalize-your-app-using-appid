@@ -60,7 +60,11 @@ git clone https://github.com/IBM/secure-and-personalize-your-app-using-appid.git
 
 ### 2. Create IBM Cloud Services
 
-**Create Discovery Service**
+#### 2.1 Create Discovery Service
+
+You can create the service by either using the IBM Cloud console or the IBM Cloud CLI.
+
+** Using IBM Cloud Console
 
 Login to [IBM Cloud](https://cloud.ibm.com) . 
 
@@ -70,11 +74,48 @@ Select `Lite` plan, if not already selected, then click `Create` to create an in
 
 ![image-20201210155703629](./images/image-20201210155703629.png)
 
+** Using IBM Cloud CLI
+
+Run the below commands to create the `Discovery` service:
+
+```
+ibmcloud login [--sso]
+ibmcloud resource service-instance-create my-discovery discovery lite [region]
+```
+> Note: Replace the placeholder for region(e.g: us-east) before running the command. Also, note the GUID of the service. It will be required in the next step.
+
+Run the below command to create a service key:
+
+```
+ibmcloud resource service-key-create skey --instance-id [GUID of Discovery]
+```
+> Note: Replace the placeholder for GUID noted earlier before running the command.
+
+The output from the command will contain the credentials as shown below. Please make a note of the `apikey` and `url`. This will be required later to configure the application.
+
+```
+Name:          skey   
+ID:            crn:v1:bluemix:public:discovery:us-east:a/96xxxx82:resource-key:38xxxxb5   
+Created At:    Tue Jan  5 06:09:04 UTC 2021   
+State:         active   
+Credentials:                                   
+               apikey:                   WtxxxxtT      
+               iam_apikey_description:   Auto-generated for key 38xxxxb5      
+               iam_apikey_name:          skey      
+               iam_role_crn:             crn:v1:bluemix:public:iam::::serviceRole:Writer      
+               iam_serviceid_crn:        crn:v1:bluemix:public:iam-identity::a/96xxxxa6::serviceid:ServiceId-2cxxxx7a      
+               url:                      https://api.us-east.discovery.watson.cloud.ibm.com/instances/2axxxx82    
+
+```
 
 
-**Create App ID service instance**
+#### 2.2 Create App ID service instance
 
-Login to [IBM Cloud](https://cloud.ibm.com) . 
+You can create the service by either using the IBM Cloud console or the IBM Cloud CLI.
+
+** Using IBM Cloud Console
+
+Login to [IBM Cloud](https://cloud.ibm.com). 
 
 Click on `Catalog` in top menu bar. Under `IBM Cloud products` search for `App ID`. Click on `App ID` tile that gets listed.
 
@@ -84,11 +125,56 @@ Select `Lite` plan, if not already selected, then click `Create` to create an in
 
 Make a note of `Service credentials` in a text file. These will be needed in later steps.
 
+** Using IBM Cloud CLI
+
+Run the below commands to create the `App ID` service:
+```
+ibmcloud resource service-instance-create my-appid appid lite [region]
+```
+> Note: Replace the placeholder for region(e.g: us-east) before running the command. Also, note the GUID of the service. It will be required in the next step.
+
+Run the below command to create a service key:
+
+```
+ibmcloud resource service-key-create skey --instance-id [GUID of Discovery]
+```
+> Note: Replace the placeholder for GUID noted earlier before running the command.
+
+The output from the command will contain the credentials as shown below. Please make a note of the `apikey` and `url`. This will be required later to configure the application.
+
+```
+Name:          skey   
+ID:            crn:v1:bluemix:public:appid:us-east:a/96xxxx73:resource-key:65xxxx9d   
+Created At:    Tue Jan  5 04:45:41 UTC 2021   
+State:         active   
+Credentials:                                   
+              apikey:                   dBxxxx7k      
+              appidServiceEndpoint:     https://us-east.appid.cloud.ibm.com      
+              clientId:                 65xxxx9d      
+              discoveryEndpoint:        https://us-east.appid.cloud.ibm.com/oauth/v4/3cxxxx73/.well-known/openid-configuration      
+              iam_apikey_description:   Auto-generated for key 65xxxx9d      
+              iam_apikey_name:          skey      
+              iam_role_crn:             crn:v1:bluemix:public:iam::::serviceRole:Writer      
+              iam_serviceid_crn:        crn:v1:bluemix:public:iam-identity::a/96xxxxa6::serviceid:ServiceId-a0xxxx00      
+              managementUrl:            https://us-east.appid.cloud.ibm.com/management/v4/3cxxxx73      
+              oauthServerUrl:           https://us-east.appid.cloud.ibm.com/oauth/v4/3cxxxx73      
+              profilesUrl:              https://us-east.appid.cloud.ibm.com      
+              secret:                   OTxxxxYx      
+              tenantId:                 3cxxxx73      
+              version:                  4      
+```
+
+The output from the command will contain the credentials as shown below. Please make a note of the `tenantId`, `secret` `profilesUrl`, `oauthServerUrl` and `clientId`. This will be required later to configure the application.
+
 ### 3. Configure App ID
 
 Access the App ID service instance using IBM Cloud dashboard. Select `Manage Authentication` in left panel menu. It shows the list of `Identity Providers`. We are using social sign-in using Facebook and Google only in this code pattern, hence disable other identity providers except Facebook and Google. The changes will get saved automatically.
 
+![Enable Social Login](./images/disable_cloud_directory.png)
+
 Next, go to `Login Customization` in left panel menu. Using this you can customize your login page.
+
+![Customize Login](./images/customize_login.png)
 
 ***Upload Logo***. You can choose any image of your choice as a logo of your login page. In this code pattern, App ID logo itself is being used and provided for your ease in `images` folder of the repository.
 
@@ -106,7 +192,7 @@ Once done, click on `Save Changes`.
   Login to IBM Cloud using the following command.
 
   ```
-ibmcloud login [--sso]
+    ibmcloud login [--sso]
   ```
 
    #### 4.1.1 Deploy News service
