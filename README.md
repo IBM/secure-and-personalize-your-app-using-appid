@@ -302,7 +302,7 @@ Make a note of this `News` Service URL. This will be used in later steps.
 
 Access your front end service URL on any browser. You can explore the application as shown here.
 
-[![](https://i9.ytimg.com/vi/aQEaWcUePOk/maxresdefault.jpg?time=1609758900000&sqp=CLTxy_8F&rs=AOn4CLDdIitsnO15eDOieeIIE-CYZvch6Q)](https://youtu.be/aQEaWcUePOk "Demo Video")
+[![](https://img.youtube.com/vi/aQEaWcUePOk/0.jpg)](https://youtu.be/aQEaWcUePOk "Demo Video")
 
 In this application, 
 * Generic News API service returns top 10 finance news of the last three days. This configuration can be changed in News API service.
