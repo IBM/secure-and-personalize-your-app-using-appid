@@ -229,7 +229,7 @@ Please refer [Section 4.2](https://github.com/IBM/secure-and-personalize-your-ap
 
     $ ibmcloud cf push <name>
    
-   >Note: Replace the place holder for <name> with a name(e.g. user-management-service) for the service. 
+   >Note: Replace the place holder for [name] with a name(e.g. user-management-service) for the service. 
  
    Run the below command to get the deployed application URL:
    
@@ -266,7 +266,7 @@ Please refer [Section 4.2](https://github.com/IBM/secure-and-personalize-your-ap
 
     $ ibmcloud cf push <name>
     
-   >Note: Replace the place holder for <name> with a name(e.g news-service) for the service. 
+   >Note: Replace the place holder for [name] with a name(e.g news-service) for the service. 
     
    Run the below command to get the deployed application URL:
       
@@ -310,11 +310,12 @@ PROFILES_URL = "https://us-east.appid.cloud.ibm.com"
    Navigate to the directory `front-end-service`.
 
     $ cd front-end-service
-    $ ibmcloud cf push <your-app-name>
+    $ ibmcloud cf push <name>
     
     ## Get your application URL
     $ ibmcloud cf apps
-
+  
+   >Note: Replace the place holder for [name] with a name(e.g front-end-service) for the service. 
    Make a note of this Front End Service application URL. This is needed in next step.
 
    ##### 4.1.3.3 Update Callback URL in App ID
@@ -326,9 +327,9 @@ PROFILES_URL = "https://us-east.appid.cloud.ibm.com"
    Select `Authentication Settings` and in `Add web redirect URLs` section, add the following URL.
 
    ```
-   https://<your-front-end-service-application-url>/callback
+   https://<front-end-service-application-url>/callback
    ```
-   >Note: Replace the placeholder <your-front-end-service-application-url>  with the `Front end` service URL noted earlier.
+   >Note: Replace the placeholder [front-end-service-application-url]  with the `Front end` service URL noted earlier.
    
    Now you are all set to access your application using the `Front end` service URL.
 
@@ -348,21 +349,23 @@ PROFILES_URL = "https://us-east.appid.cloud.ibm.com"
    
    ##### 4.2.1.2 Deploy 
 
-   Run the below command in the `user-management-service` folder to deploy the service:
+   Run the below commands in the `user-management-service` folder to deploy the service:
 
     $ cd user-management-service
-    $ oc new-app --name=<your-app-name> .
-    $ oc start-build <your-app-name> --from-dir=.
+    $ oc new-app --name=<app-name> .
+    $ oc start-build <app-name> --from-dir=.
     
     ## build status can be checked using following command
-    $ oc logs -f bc/<your-app-name>
+    $ oc logs -f bc/<app-name>
     
     ## app deployment status can be checked using below command
     $ oc status        # it should show that 1 pod is deployed for your app
     
-    $ oc expose svc/<your-app-name>
-    $ oc get routes <your-app-name>  ## copy full route for next step
+    $ oc expose svc/<app-name>
+    $ oc get routes <app-name>  ## copy full route for next step
 
+   >Note: Replace the placeholder [app-name] with a name(e.g: user-mgmt-service) for your service.
+   
    Make a note of this User Management Service application URL. This is needed in below steps.
 
   #### 4.2.2 Deploy news service on OpenShift
@@ -373,21 +376,22 @@ PROFILES_URL = "https://us-east.appid.cloud.ibm.com"
 
   ##### 4.2.2.2 Deploy
 
-   Run the below command in the `news-api-service` folder to deploy the service:
+   Run the below commands in the `news-api-service` folder to deploy the service:
 
     $ cd news-api-service
-    $ oc new-app --name=<your-app-name> .
-    $ oc start-build <your-app-name> --from-dir=.
+    $ oc new-app --name=<app-name> .
+    $ oc start-build <app-name> --from-dir=.
     
     ## build status can be checked using following command
-    $ oc logs -f bc/<your-app-name>
+    $ oc logs -f bc/<app-name>
     
     ## app deployment status can be checked using below command
     $ oc status        # it should show that 1 pod is deployed for your app
     
-    $ oc expose svc/<your-app-name>
-    $ oc get routes <your-app-name>  ## copy full route for next step
+    $ oc expose svc/<app-name>
+    $ oc get routes <app-name>  ## copy full route for next step
 
+   >Note: Replace the placeholder [app-name] with a name(e.g: news-service) for your service.
    Make a note of the service URL. This is needed to configure the other services.
 
    #### 4.2.3 Deploy front-end service on OpenShift
@@ -398,24 +402,26 @@ PROFILES_URL = "https://us-east.appid.cloud.ibm.com"
     
    ##### 4.2.3.2 Deploy 
 
-   Run the below command in the `front-end-service` folder to deploy the service:
+   Run the below commands in the `front-end-service` folder to deploy the service:
 
     $ cd front-end-service
-    $ oc new-app --name=<your-app-name> .
-    $ oc start-build <your-app-name> --from-dir=.
+    $ oc new-app --name=<app-name> .
+    $ oc start-build <app-name> --from-dir=.
     
     ## build status can be checked using following command
-    $ oc logs -f bc/<your-app-name>
+    $ oc logs -f bc/<app-name>
     
     ## app deployment status can be checked using below command
     $ oc status        # it should show that 1 pod is deployed for your app
     
-    $ oc expose svc/<your-app-name>
-    $ oc get routes <your-app-name>  ## copy full route for next step
+    $ oc expose svc/<app-name>
+    $ oc get routes <app-name>  ## copy full route for next step
     
     # this route will be used by AppID for callback URL, so lets update deployment config before accessing the application
     $ oc set env dc/<your-app-name> APPLICATION_URL=http://<your-application-route>
 
+   >Note: Replace the placeholder [app-name] with a name(e.g: front-end-service) for your service.
+   
    Make a note of the service URL. This is needed in next step.
 
    ##### 4.2.3.3 Update Callback URL in App ID
@@ -436,15 +442,15 @@ PROFILES_URL = "https://us-east.appid.cloud.ibm.com"
 
 ### 5. Access your application and analyze the results
 
-Access your front end service URL on any browser. You can explore the application as shown here.
+You can access the deployed application with the front end service URL on any browser. You can explore the application as shown in the below video.
 
-[![](https://img.youtube.com/vi/aQEaWcUePOk/0.jpg)](https://youtu.be/aQEaWcUePOk "Demo Video")
+![Demo](./images/demo.gif)
 
 In this application, 
-* Generic News API service returns top 10 finance news of the last three days. This configuration can be changed in News API service.
-* Application uses only Facebook and Google sign-in. Other ways of authentication can also be explored in App ID and used as per the requirement.
+* The generic `News` service returns top 10 finance news of the last three days. This configuration can be changed in `News` service.
+* This application uses only Facebook and Google sign-in. The other ways of authentication can also be explored in App ID and used as per the requirement.
 * From the user's social media profile, this application uses user's name only. There are other attributes which can be used for personalization in the application. The user's email id can be used for email notification in the application. You may use user's photo as well retrieved from Facebook profile.
-* Personalized News API service returns top 10 finance news of the last seven days. It is defined in News API service.
+* The personalized `News` service returns top 10 finance news of the last seven days. This is configured in the `News` service.
 
 ## Learn More
 
