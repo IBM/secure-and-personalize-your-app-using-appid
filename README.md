@@ -4,7 +4,7 @@
 
 There are two important aspects for any application that you build - `Authentication and User Personalization`. 
 
-If you take authentication on online platforms, the support for `Social login` is common now. The users can login to the online portal using their Google or Facebook accounts. This method of authentication is beneficial both for online portals and end users. There is increased consumption and usability as there is no need to create a separate account on every online portal for authentication. The trust in the security provided by social media login has been increasing too. 
+If you take authentication on online platforms, the support for `Social login` is common now. The users can login to the online portal using their Google or Facebook accounts. This method of authentication is beneficial both for online portals and end users. There is no need to create a separate account on every online portal for end-users. This leads to increased consumption for online portals. The trust in the security provided by social media login has been increasing too. 
 
 The second aspect is user personalization. Many online portals have vast amount of information. The end user is interested only in certain areas of the information. User personalization can make the portal more consumable for an end user. Let us take the example of a online news portal. The news can be from the area of Politics, Entertainment, Science, Technology, Sports or Finance. An end user who is interested in Sports will have to filter through many articles before reading the article of interest. Here, user personalization can do the filtering task and present articles in the end users areas of interest.
 
@@ -205,7 +205,7 @@ Once done, click on `Save Changes`.
     $ cd user-management-service
     $ cp .env.sample .env
 
-   Update the environment file(.env) with appropriate values that we noted earlier during creation of `App ID` and `Discovery` services.
+   Update the environment file(.env) with appropriate values that we noted earlier during creation of `App ID` service.
    
    ```
    OAUTH_SERVER_URL=https://us-east.appid.cloud.ibm.com/oauth/v4/3cxxxx73
@@ -227,7 +227,7 @@ Once done, click on `Save Changes`.
 
    #### 4.1.2 Deploy News service
 
-   ***Set the environment***
+   ##### 4.1.2.1 Set the environment
 
     $ cd news-api-service
     $ cp .env.sample .env
@@ -244,7 +244,7 @@ Once done, click on `Save Changes`.
    USER_MGMT_SERVICE_URL=http://user-management-service-xxxx.mybluemix.net/user-preferences                                                                                                       
    ```
 
-   ***Deploy service***
+   ##### 4.1.2.2 Deploy service
 
    Navigate to the directory `news-api-service`.
 
@@ -258,7 +258,7 @@ Make a note of this `News` Service URL. This will be used in later steps.
 
    #### 4.1.3 Deploy front-end service
 
-   ***Set the environment***
+   ##### 4.1.3.1 Set the environment
 
     $ cd front-end-service
     $ cp .env.sample .env
@@ -283,7 +283,7 @@ OAUTH_SERVER_URL = "https://us-east.appid.cloud.ibm.com/oauth/v4/3cxxxx73"
 PROFILES_URL = "https://us-east.appid.cloud.ibm.com"
    ```
 
-   ***Deploy service***
+   ##### 4.1.3.2 Deploy service
 
    Navigate to the directory `front-end-service`.
 
@@ -295,7 +295,7 @@ PROFILES_URL = "https://us-east.appid.cloud.ibm.com"
 
    Make a note of this Front End Service application URL. This is needed in next step.
 
-   ***Update Callback URL in App ID***
+   ##### 4.1.3.3 Update Callback URL in App ID
 
    Go to `IBM Cloud dashboard -> Services -> <your AppID service> -> Manage Authentication`.
 
