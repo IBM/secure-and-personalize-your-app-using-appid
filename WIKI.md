@@ -1,7 +1,3 @@
-> Use this file to gather the content required for the pattern overview. Copy this draft-patten-template.md file, replace with your own content for each of the sections below, and attach your file to the GitHub tracking issue for your pattern.
-
-> For full details on requirements for each section, see "Write a code pattern overview" on w3 Developer: [https://w3.ibm.com/developer/docs/content/write-overview/](https://w3.ibm.com/developer/docs/content/write-overview/)
-
 # Short title
 
 Add authentication using social login and personalize user content
@@ -30,7 +26,7 @@ Add Security and User Personalization for an online Finance news portal using Ap
 
 # Summary
 
-Authentication and Personalization are two important aspects of any application. This code pattern demonstrates how social login support and personalization can be added to any application using App ID.
+In any application, authentication and personalization are important aspects. This code pattern demonstrates how authentication using social login and user personalization can be added to any application using App ID.
 
 # Technologies
 
