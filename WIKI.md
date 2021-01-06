@@ -72,7 +72,7 @@ When the reader has completed this code pattern, they will understand how to:
 
 # Components and services
 
-* [RedHat OpenShift on IBM Cloud](https://developer.ibm.com/components/redhat-openshift-ibm-cloud/)
+* [Red Hat OpenShift on IBM Cloud](https://developer.ibm.com/components/redhat-openshift-ibm-cloud/)
 * [Cloud Foundry](https://developer.ibm.com/components/cloud-foundry/)
 * [App ID](https://cloud.ibm.com/catalog/services/app-id)
 * [Discovery](https://cloud.ibm.com/catalog/services/discovery)
