@@ -198,14 +198,18 @@ Once done, click on `Save Changes`.
     ibmcloud login [--sso]
   ```
 
- #### 4.1.1 Deploy user management service
+ #### 4.1.1 Configure and deploy user management service on Cloud Foundry
 
-   ##### 4.1.1.1 Set the environment
+   ##### 4.1.1.1 Configure
     
+   The `User management` service needs to be configured to access the `App ID` service to store and access user profiles.
+   
+   Run the below commands to create the environment file:
+   
     $ cd user-management-service
     $ cp .env.sample .env
 
-   Update the environment file(.env) with appropriate values that we noted earlier during creation of `App ID` service.
+   Now, edit the environment file(.env) and update with appropriate values(as shown below) that you noted earlier during creation of `App ID` service.
    
    ```
    OAUTH_SERVER_URL=https://us-east.appid.cloud.ibm.com/oauth/v4/3cxxxx73
@@ -213,26 +217,32 @@ Once done, click on `Save Changes`.
    PROFILES_URL=https://us-east.appid.cloud.ibm.com                                                    
    ```
 
-   ##### 4.1.1.2 Deploy service
+   ##### 4.1.1.2 Deploy 
 
-   Navigate to the directory `user-management-service`.
+   Run the below command in the `user-management-service` folder to deploy the service:
 
-    $ cd user-management-service
-    $ ibmcloud cf push <your-app-name>
-    
-    ## Get your application URL
+    $ ibmcloud cf push <name>
+   
+   >Note: Replace the place holder for <name> with a name(e.g. user-management-service) for the service. 
+ 
+   Run the below command to get the deployed application URL:
+   
     $ ibmcloud cf apps
 
-   Make a note of this User Management Service application URL. This is needed in below steps.
+   Make a note of this URL. This is needed to configure the other services.
 
-   #### 4.1.2 Deploy News service
+   #### 4.1.2 Configure and deploy news service on Cloud Foundry
 
-   ##### 4.1.2.1 Set the environment
+   ##### 4.1.2.1 Configure
 
+   The `News` service needs to be confgured to access the `Discovery` service and the `User management` service.
+   
+   Run the below commands to create the environment file:
+   
     $ cd news-api-service
     $ cp .env.sample .env
 
-   Update the environment file(.env) with appropriate values from the credentials data noted during creation of `Discovery` service, and the `User management` service url.
+   Now, edit the environment file(.env) and update with appropriate values(as shown below) from the credentials data noted during creation of `Discovery` service, and the `User management` service url.
    
    ```
    DISCOVERY_IAM_URL=https://iam.bluemix.net/identity/token
@@ -244,29 +254,35 @@ Once done, click on `Save Changes`.
    USER_MGMT_SERVICE_URL=http://user-management-service-xxxx.mybluemix.net/user-preferences                                                                                                       
    ```
 
-   ##### 4.1.2.2 Deploy service
+   ##### 4.1.2.2 Deploy
 
-   Navigate to the directory `news-api-service`.
+   Run the below command in the `news-api-service` folder to deploy the service:
 
-    $ cd news-api-service
-    $ ibmcloud cf push <your-app-name>
+    $ ibmcloud cf push <name>
     
-    ## Get your application URL
+   >Note: Replace the place holder for <name> with a name(e.g news-service) for the service. 
+    
+   Run the below command to get the deployed application URL:
+      
     $ ibmcloud cf apps
 
-Make a note of this `News` Service URL. This will be used in later steps.
+   Make a note of this URL. This is needed to configure the other services.
 
-   #### 4.1.3 Deploy front-end service
+   #### 4.1.3 Configure and deploy front end service on Cloud Foundry
 
-   ##### 4.1.3.1 Set the environment
+   ##### 4.1.3.1 Configure
 
+   The `Front end` service needs to be configured to access the `App ID` service, `User management` service and `News` service.
+   
+   Run the below commands to create the environment file:
+   
     $ cd front-end-service
     $ cp .env.sample .env
 
-   Update the environment file(.env) with appropriate values of App ID credentials, and URLs of `User management` and `News` services.
+   Edit the environment file(.env) and update with appropriate values(as shown below) of App ID credentials, and URLs of `User management` and `News` services.
    
    ```
-   /APP ID callback URL
+// APP ID callback URL
 CALLBACK_URL = "/callback"
 
 //Backend Services URL
@@ -306,8 +322,9 @@ PROFILES_URL = "https://us-east.appid.cloud.ibm.com"
    ```
    https://<your-front-end-service-application-url>/callback
    ```
-
-   Now you are all set to access your application.
+   >Note" Replace the placeholder <your-front-end-service-application-url>  with the `Front end` service URL noted earlier.
+   
+   Now you are all set to access your application using the `Front end` service URL.
 
 
   ### 4.2 Deploy on OpenShift
@@ -317,14 +334,15 @@ PROFILES_URL = "https://us-east.appid.cloud.ibm.com"
   oc login --token=xxxx --server=https://xxxx.containers.cloud.ibm.com:xxx
   ```
 
-   #### 4.2.1 Deploy user management service
+   #### 4.2.1 Configure and deploy user management service on OpenShift
 
-   ##### 4.2.1.1 Set the environment
+   ##### 4.2.1.1 Configure 
 
-    Please refer to 
-   ***Deploy service***
+    Please refer to [Section 4.1.1.1](https://github.com/IBM/secure-and-personalize-your-app-using-appid#4111-configure) to configure the service.
+   
+   ##### 4.2.1.2 Deploy 
 
-   Navigate to the directory `user-management-service`.
+   Run the below command in the `user-management-service` folder to deploy the service:
 
     $ cd user-management-service
     $ oc new-app --name=<your-app-name> .
