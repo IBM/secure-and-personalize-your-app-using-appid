@@ -390,7 +390,7 @@ PROFILES_URL = "https://us-east.appid.cloud.ibm.com"
 
    Make a note of the service URL. This is needed to configure the other services.
 
-   #### 4.2.3 Deploy front-end service
+   #### 4.2.3 Deploy front-end service on OpenShift
 
    ##### 4.2.3.1 Configure
 
