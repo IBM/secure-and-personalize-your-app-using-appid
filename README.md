@@ -140,7 +140,7 @@ ibmcloud resource service-instance-create my-appid appid lite [region]
 Run the below command to create a service key:
 
 ```
-ibmcloud resource service-key-create skey --instance-id [GUID of Discovery]
+ibmcloud resource service-key-create skey --instance-id [GUID of App ID]
 ```
 > Note: Replace the placeholder for GUID noted earlier before running the command.
 
