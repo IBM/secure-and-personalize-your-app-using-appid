@@ -200,7 +200,7 @@ Once done, click on `Save Changes`.
 
  #### 4.1.1 Deploy user management service
 
-   ***Set the environment***
+   ##### 4.1.1.1 Set the environment
     
     $ cd user-management-service
     $ cp .env.sample .env
@@ -213,7 +213,7 @@ Once done, click on `Save Changes`.
    PROFILES_URL=https://us-east.appid.cloud.ibm.com                                                    
    ```
 
-   ***Deploy service***
+   ##### 4.1.1.2 Deploy service
 
    Navigate to the directory `user-management-service`.
 
@@ -317,7 +317,31 @@ PROFILES_URL = "https://us-east.appid.cloud.ibm.com"
   oc login --token=xxxx --server=https://xxxx.containers.cloud.ibm.com:xxx
   ```
 
-   #### 4.2.1 Deploy News service
+   #### 4.2.1 Deploy user management service
+
+   ##### 4.2.1.1 Set the environment
+
+    Please refer to 
+   ***Deploy service***
+
+   Navigate to the directory `user-management-service`.
+
+    $ cd user-management-service
+    $ oc new-app --name=<your-app-name> .
+    $ oc start-build <your-app-name> --from-dir=.
+    
+    ## build status can be checked using following command
+    $ oc logs -f bc/<your-app-name>
+    
+    ## app deployment status can be checked using below command
+    $ oc status        # it should show that 1 pod is deployed for your app
+    
+    $ oc expose svc/<your-app-name>
+    $ oc get routes <your-app-name>  ## copy full route for next step
+
+   Make a note of this User Management Service application URL. This is needed in below steps.
+
+  #### 4.2.2 Deploy News service
 
    ***Set the environment***
 
@@ -344,34 +368,6 @@ PROFILES_URL = "https://us-east.appid.cloud.ibm.com"
     $ oc get routes <your-app-name>  ## copy full route for next step
 
    Make a note of this News API Service application URL. This is needed in below steps.
-
-   #### 4.2.2 Deploy user management service
-
-   ***Set the environment***
-
-    $ cd user-management-service
-    $ cp .env.sample .env
-
-   Update the environment file(.env) with appropriate values.
-
-   ***Deploy service***
-
-   Navigate to the directory `user-management-service`.
-
-    $ cd user-management-service
-    $ oc new-app --name=<your-app-name> .
-    $ oc start-build <your-app-name> --from-dir=.
-    
-    ## build status can be checked using following command
-    $ oc logs -f bc/<your-app-name>
-    
-    ## app deployment status can be checked using below command
-    $ oc status        # it should show that 1 pod is deployed for your app
-    
-    $ oc expose svc/<your-app-name>
-    $ oc get routes <your-app-name>  ## copy full route for next step
-
-   Make a note of this User Management Service application URL. This is needed in below steps.
 
    #### 4.2.3 Deploy front-end service
 
