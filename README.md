@@ -1,4 +1,3 @@
-*** Work in progress ***
 
 # Add Security and User Personalization for an online Finance news portal using AppID
 
