@@ -4,7 +4,7 @@
 
 There are two important aspects for any application that you build - `Authentication and User Personalization`. 
 
-If you take authentication on online platforms, the support for `Social login` is common now. The users can login to the online portal using their Google or Facebook accounts. This method of authentication is beneficial both for online portals and end users. There is increased consumption and usability as there is no need to create a separate account on every online portal for authentication. The trust in the security provided by social media login has been increasing too. 
+If you take authentication on online platforms, the support for `Social login` is common now. The users can login to the online portal using their Google or Facebook accounts. This method of authentication is beneficial both for online portals and end users. There is no need to create a separate account on every online portal for end-users. This leads to increased consumption for online portals. The trust in the security provided by social media login has been increasing too. 
 
 The second aspect is user personalization. Many online portals have vast amount of information. The end user is interested only in certain areas of the information. User personalization can make the portal more consumable for an end user. Let us take the example of a online news portal. The news can be from the area of Politics, Entertainment, Science, Technology, Sports or Finance. An end user who is interested in Sports will have to filter through many articles before reading the article of interest. Here, user personalization can do the filtering task and present articles in the end users areas of interest.
 
@@ -115,7 +115,7 @@ Credentials:
 
 You can create the service by either using the IBM Cloud console([Section 2.21](https://github.com/IBM/secure-and-personalize-your-app-using-appid#221-create-from-the-ibm-cloud-console)) or the IBM Cloud CLI([Section 2.22](https://github.com/IBM/secure-and-personalize-your-app-using-appid#222-create-using-ibm-cloud-cli)).
 
-##### 2.21 Create from the IBM Cloud Console**
+##### 2.21 Create from the IBM Cloud Console
 
 Login to [IBM Cloud](https://cloud.ibm.com). 
 
@@ -190,6 +190,12 @@ Once done, click on `Save Changes`.
 
 ### 4. Deploy Application
 
+The application can be deployed on a IBM Cloud Foundry runtime or OpenShift cluster on IBM Cloud.
+
+Please refer [Section 4.1](https://github.com/IBM/secure-and-personalize-your-app-using-appid#41-deploy-on-cloud-foundry) to deploy the application on Cloud Foundry.
+
+Please refer [Section 4.2](https://github.com/IBM/secure-and-personalize-your-app-using-appid#42-deploy-on-openshift) to deploy the application on OpenShift.
+
   ### 4.1 Deploy on Cloud Foundry
 
   Login to IBM Cloud using the following command.
@@ -198,14 +204,18 @@ Once done, click on `Save Changes`.
     ibmcloud login [--sso]
   ```
 
- #### 4.1.1 Deploy user management service
+ #### 4.1.1 Configure and deploy user management service on Cloud Foundry
 
-   ***Set the environment***
+   ##### 4.1.1.1 Configure
     
+   The `User management` service needs to be configured to access the `App ID` service to store and access user profiles.
+   
+   Run the below commands to create the environment file:
+   
     $ cd user-management-service
     $ cp .env.sample .env
 
-   Update the environment file(.env) with appropriate values that we noted earlier during creation of `App ID` and `Discovery` services.
+   Now, edit the environment file(.env) and update with appropriate values(as shown below) that you noted earlier during creation of `App ID` service.
    
    ```
    OAUTH_SERVER_URL=https://us-east.appid.cloud.ibm.com/oauth/v4/3cxxxx73
@@ -213,26 +223,32 @@ Once done, click on `Save Changes`.
    PROFILES_URL=https://us-east.appid.cloud.ibm.com                                                    
    ```
 
-   ***Deploy service***
+   ##### 4.1.1.2 Deploy 
 
-   Navigate to the directory `user-management-service`.
+   Run the below command in the `user-management-service` folder to deploy the service:
 
-    $ cd user-management-service
-    $ ibmcloud cf push <your-app-name>
-    
-    ## Get your application URL
+    $ ibmcloud cf push <name>
+   
+   >Note: Replace the place holder for <name> with a name(e.g. user-management-service) for the service. 
+ 
+   Run the below command to get the deployed application URL:
+   
     $ ibmcloud cf apps
 
-   Make a note of this User Management Service application URL. This is needed in below steps.
+   Make a note of this URL. This is needed to configure the other services.
 
-   #### 4.1.2 Deploy News service
+   #### 4.1.2 Configure and deploy news service on Cloud Foundry
 
-   ***Set the environment***
+   ##### 4.1.2.1 Configure
 
+   The `News` service needs to be confgured to access the `Discovery` service and the `User management` service.
+   
+   Run the below commands to create the environment file:
+   
     $ cd news-api-service
     $ cp .env.sample .env
 
-   Update the environment file(.env) with appropriate values from the credentials data noted during creation of `Discovery` service, and the `User management` service url.
+   Now, edit the environment file(.env) and update with appropriate values(as shown below) from the credentials data noted during creation of `Discovery` service, and the `User management` service url.
    
    ```
    DISCOVERY_IAM_URL=https://iam.bluemix.net/identity/token
@@ -244,29 +260,35 @@ Once done, click on `Save Changes`.
    USER_MGMT_SERVICE_URL=http://user-management-service-xxxx.mybluemix.net/user-preferences                                                                                                       
    ```
 
-   ***Deploy service***
+   ##### 4.1.2.2 Deploy
 
-   Navigate to the directory `news-api-service`.
+   Run the below command in the `news-api-service` folder to deploy the service:
 
-    $ cd news-api-service
-    $ ibmcloud cf push <your-app-name>
+    $ ibmcloud cf push <name>
     
-    ## Get your application URL
+   >Note: Replace the place holder for <name> with a name(e.g news-service) for the service. 
+    
+   Run the below command to get the deployed application URL:
+      
     $ ibmcloud cf apps
 
-Make a note of this `News` Service URL. This will be used in later steps.
+   Make a note of this URL. This is needed to configure the other services.
 
-   #### 4.1.3 Deploy front-end service
+   #### 4.1.3 Configure and deploy front end service on Cloud Foundry
 
-   ***Set the environment***
+   ##### 4.1.3.1 Configure
 
+   The `Front end` service needs to be configured to access the `App ID` service, `User management` service and `News` service.
+   
+   Run the below commands to create the environment file:
+   
     $ cd front-end-service
     $ cp .env.sample .env
 
-   Update the environment file(.env) with appropriate values of App ID credentials, and URLs of `User management` and `News` services.
+   Edit the environment file(.env) and update with appropriate values(as shown below) of App ID credentials, and URLs of `User management` and `News` services.
    
    ```
-   /APP ID callback URL
+// APP ID callback URL
 CALLBACK_URL = "/callback"
 
 //Backend Services URL
@@ -283,7 +305,7 @@ OAUTH_SERVER_URL = "https://us-east.appid.cloud.ibm.com/oauth/v4/3cxxxx73"
 PROFILES_URL = "https://us-east.appid.cloud.ibm.com"
    ```
 
-   ***Deploy service***
+   ##### 4.1.3.2 Deploy service
 
    Navigate to the directory `front-end-service`.
 
@@ -295,7 +317,7 @@ PROFILES_URL = "https://us-east.appid.cloud.ibm.com"
 
    Make a note of this Front End Service application URL. This is needed in next step.
 
-   ***Update Callback URL in App ID***
+   ##### 4.1.3.3 Update Callback URL in App ID
 
    Go to `IBM Cloud dashboard -> Services -> <your AppID service> -> Manage Authentication`.
 
@@ -306,8 +328,9 @@ PROFILES_URL = "https://us-east.appid.cloud.ibm.com"
    ```
    https://<your-front-end-service-application-url>/callback
    ```
-
-   Now you are all set to access your application.
+   >Note: Replace the placeholder <your-front-end-service-application-url>  with the `Front end` service URL noted earlier.
+   
+   Now you are all set to access your application using the `Front end` service URL.
 
 
   ### 4.2 Deploy on OpenShift
@@ -317,46 +340,15 @@ PROFILES_URL = "https://us-east.appid.cloud.ibm.com"
   oc login --token=xxxx --server=https://xxxx.containers.cloud.ibm.com:xxx
   ```
 
-   #### 4.2.1 Deploy News service
+   #### 4.2.1 Configure and deploy user management service on OpenShift
 
-   ***Set the environment***
+   ##### 4.2.1.1 Configure 
 
-    $ cd news-api-service
-    $ cp .env.sample .env
+   Please refer to [Section 4.1.1.1](https://github.com/IBM/secure-and-personalize-your-app-using-appid#4111-configure) to configure the service.
+   
+   ##### 4.2.1.2 Deploy 
 
-   Update the environment file(.env) with appropriate values.
-
-   ***Deploy service***
-
-   Navigate to the directory `news-api-service`.
-
-    $ cd news-api-service
-    $ oc new-app --name=<your-app-name> .
-    $ oc start-build <your-app-name> --from-dir=.
-    
-    ## build status can be checked using following command
-    $ oc logs -f bc/<your-app-name>
-    
-    ## app deployment status can be checked using below command
-    $ oc status        # it should show that 1 pod is deployed for your app
-    
-    $ oc expose svc/<your-app-name>
-    $ oc get routes <your-app-name>  ## copy full route for next step
-
-   Make a note of this News API Service application URL. This is needed in below steps.
-
-   #### 4.2.2 Deploy user management service
-
-   ***Set the environment***
-
-    $ cd user-management-service
-    $ cp .env.sample .env
-
-   Update the environment file(.env) with appropriate values.
-
-   ***Deploy service***
-
-   Navigate to the directory `user-management-service`.
+   Run the below command in the `user-management-service` folder to deploy the service:
 
     $ cd user-management-service
     $ oc new-app --name=<your-app-name> .
@@ -373,18 +365,40 @@ PROFILES_URL = "https://us-east.appid.cloud.ibm.com"
 
    Make a note of this User Management Service application URL. This is needed in below steps.
 
+  #### 4.2.2 Deploy news service on OpenShift
+
+  ##### 4.2.2.1 Configure
+
+  Please refer to [Section 4.1.2.1](https://github.com/IBM/secure-and-personalize-your-app-using-appid/4121-configure) to configure the service.
+
+  ##### 4.2.2.2 Deploy
+
+   Run the below command in the `news-api-service` folder to deploy the service:
+
+    $ cd news-api-service
+    $ oc new-app --name=<your-app-name> .
+    $ oc start-build <your-app-name> --from-dir=.
+    
+    ## build status can be checked using following command
+    $ oc logs -f bc/<your-app-name>
+    
+    ## app deployment status can be checked using below command
+    $ oc status        # it should show that 1 pod is deployed for your app
+    
+    $ oc expose svc/<your-app-name>
+    $ oc get routes <your-app-name>  ## copy full route for next step
+
+   Make a note of the service URL. This is needed to configure the other services.
+
    #### 4.2.3 Deploy front-end service
 
-   ***Set the environment***
+   ##### 4.2.3.1 Configure
 
-    $ cd front-end-service
-    $ cp .env.sample .env
+   Please refer to [Section 4.1.3.1](https://github.com/IBM/secure-and-personalize-your-app-using-appid#4131-configure) to configure the service.
+    
+   ##### 4.2.3.2 Deploy 
 
-   Update the environment file(.env) with appropriate values with appropriate values of App ID credentials and URL of previously deployed services.
-
-   ***Deploy service***
-
-   Navigate to the directory `front-end-service`.
+   Run the below command in the `front-end-service` folder to deploy the service:
 
     $ cd front-end-service
     $ oc new-app --name=<your-app-name> .
@@ -402,9 +416,9 @@ PROFILES_URL = "https://us-east.appid.cloud.ibm.com"
     # this route will be used by AppID for callback URL, so lets update deployment config before accessing the application
     $ oc set env dc/<your-app-name> APPLICATION_URL=http://<your-application-route>
 
-   Make a note of this Front End Service application URL. This is needed in next step.
+   Make a note of the service URL. This is needed in next step.
 
-   ***Update Callback URL in App ID***
+   ##### 4.2.3.3 Update Callback URL in App ID
 
    Go to `IBM Cloud dashboard -> Services -> <your AppID service> -> Manage Authentication`. 
 
