@@ -11,7 +11,6 @@ Add Security and User Personalization for an online Finance news portal using Ap
 * Shikha Maheshwari <shikha.mah@in.ibm.com>
 * Muralidhar Chavan <muralidhar.chavan@in.ibm.com>
 * Balaji Kadambi <bkadambi@in.ibm.com>
-* Manjula Hosurmath <mhosurma@in.ibm.com>
 
 # URLs
 
