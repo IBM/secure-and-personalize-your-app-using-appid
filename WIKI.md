@@ -29,9 +29,9 @@ In any application, authentication and personalization are important aspects. Th
 
 # Technologies
 
-* [Privacy](https://developer.ibm.com/technologies/privacy-and-security/)
+* [Security](https://developer.ibm.com/solutions/security/)
 * [Containers](https://developer.ibm.com/technologies/containers/)
-* [Data Science](https://developer.ibm.com/technologies/data-science/)
+* [NodeJS](https://developer.ibm.com/languages/node-js/)
 
 # Description
 
@@ -72,13 +72,14 @@ When the reader has completed this code pattern, they will understand how to:
 # Components and services
 
 * [Red Hat OpenShift on IBM Cloud](https://developer.ibm.com/components/redhat-openshift-ibm-cloud/)
-* [Cloud Foundry](https://developer.ibm.com/components/cloud-foundry/)
+* [IBM Cloud](https://developer.ibm.com/components/cloud-foundry/)
 * [App ID](https://cloud.ibm.com/catalog/services/app-id)
 * [Discovery](https://cloud.ibm.com/catalog/services/discovery)
+* [Security](https://developer.ibm.com/solutions/security/)
 
 # Runtimes
 
-* javascript/node
+* NodeJS
 
 # Related IBM Developer content
 
