@@ -1,5 +1,5 @@
 
-# Add Security and User Personalization for an online Finance news portal using AppID
+# Authenticate and personalize a financial news portal
 
 There are two important aspects for any application that you build - `Authentication and User Personalization`. 
 
