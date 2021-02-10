@@ -1,6 +1,8 @@
 
 # Authenticate and personalize a financial news portal
 
+## Add social login to your apps and customize content with IBM Cloud App ID
+
 There are two important aspects for any application that you build - `Authentication and User Personalization`. 
 
 If you take authentication on online platforms, the support for `Social login` is common now. The users can login to the online portal using their Google or Facebook accounts. This method of authentication is beneficial both for online portals and end users. There is no need to create a separate account on every online portal for end-users. This leads to increased consumption for online portals. The trust in the security provided by social media login has been increasing too. 
