@@ -1,7 +1,7 @@
 
 # Authenticate and personalize a financial news portal
 
-## Add social login to your apps and customize content with IBM Cloud App ID
+### Add social login to your apps and customize content with IBM Cloud App ID
 
 There are two important aspects for any application that you build - `Authentication and User Personalization`. 
 
